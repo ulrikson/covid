@@ -1,7 +1,8 @@
 import requests
-import datetime
+from datetime import date, timedelta
 from sqlalchemy import create_engine, text
 import psycopg2
+
 
 def dbConnect():
     uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid"
@@ -51,9 +52,51 @@ def getFromDB():
     print(result)
 
 
+def lastDbDate():
+    conn = dbConnect()
+
+    query = text("""
+        SELECT MAX(date) FROM sweden
+    """)
+
+    result = conn.execute(query).fetchone()
+
+    conn.dispose()
+
+    return result[0]
+
+
+def newDataToDb():
+
+    # creating timedelta for fetching data
+    start = lastDbDate()
+    yesterday = date.today() - timedelta(days=1)
+    end =  yesterday
+    delta = end - start
+
+    # db connect
+    conn = dbConnect()
+
+    # looping dates in timedelta, fetching that days data from API and inserting into DB
+    for i in range(delta.days + 1):
+        day = start + timedelta(days=i)
+        
+        data = fetch(day)
+        aggregated = aggregate(data)
+
+        query = text(f"""
+            INSERT INTO sweden (date, confirmed, deaths, recovered, active)
+            VALUES ('{day}', '{aggregated["confirmed"]}', '{aggregated["deaths"]}', '{aggregated["recovered"]}', '{aggregated["active"]}')
+        """)
+
+        conn.execute(query)
+    
+    conn.dispose()
+
+    return 'success'
+
+
 def main():
-    data = fetch('2020-11-20')
-    aggregated = aggregate(data)
-    getFromDB()
+    newDataToDb()
 
 main()
