@@ -85,7 +85,7 @@ def updateDb():
         aggregated = aggregate(data)
 
         query = text(f"""
-            INSERT INTO sweden (date, confirmed, deaths, recovered, active)
+            INSERT INTO sweden (report_date, confirmed, deaths, recovered, active)
             VALUES ('{day}', '{aggregated["confirmed"]}', '{aggregated["deaths"]}', '{aggregated["recovered"]}', '{aggregated["active"]}')
         """)
 
@@ -101,7 +101,7 @@ def timeline():
     conn = dbConnect()
 
     query = text("""
-     SELECT date, confirmed FROM sweden
+     SELECT report_date, confirmed FROM sweden
     """)
 
     result = conn.execute(query).fetchall()
