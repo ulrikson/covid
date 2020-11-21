@@ -66,7 +66,7 @@ def lastDbDate():
     return result[0]
 
 
-def newDataToDb():
+def updateDb():
 
     # creating timedelta for fetching data
     start = lastDbDate()
@@ -96,7 +96,26 @@ def newDataToDb():
     return 'success'
 
 
-def main():
-    newDataToDb()
+def timeline():
+    # sql query to fetch all data points
+    conn = dbConnect()
 
-main()
+    query = text("""
+     SELECT date, confirmed FROM sweden
+    """)
+
+    result = conn.execute(query).fetchall()
+
+    conn.dispose()
+
+    # convert into 2 array (to start with), date (label) and confirmed (data)
+    labels = [data[0].strftime("%Y-%m-%d") for data in result]
+    confirmed = [data[1] for data in result]
+
+    # converting to dict
+    json = {
+        'labels': labels,
+        'confirmed': confirmed
+    }
+
+    return json
