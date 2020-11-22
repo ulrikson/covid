@@ -1,5 +1,5 @@
 <template>
-    <div class="w-6/12">
+    <div class="w-90/100">
         <line-chart :chart-data="datacollection" :options="options"></line-chart>
     </div>
 </template>
@@ -20,11 +20,17 @@ export default {
             datacollection: null,
 
             options: {
+                maintainAspectRatio: false,
+                responsive: true,
                 scales: {
                     xAxes: [{
                         gridLines: {
                             display: false
+                        },
+                        ticks: {
+                            display: false
                         }
+
                     }],
                     yAxes: [{
                         gridLines: {
@@ -40,6 +46,9 @@ export default {
                         borderColor: '#285FD5',
                         borderWidth: 10 
                     }
+                },
+                legend: {
+                    display: false
                 }
             }
 		}

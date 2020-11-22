@@ -1,18 +1,34 @@
 <template>
-	<div>
-		<h1 class="text-6xl text-gray-400">HEJ</h1>
-		<Chart />
+	<div class="bg-dark h-screen flex justify-end">
+		<div class="w-17/24 p-8 rounded-l-3xl bg-light">
+			<div>
+				<h1 class="font-bold text-xl text-superdark">COVID I SVERIGE</h1>
+				<p class="text-gray-500">Total statistik</p>
+			</div>
+			<div class="flex justify-between py-8">
+				<InfoCards />
+				<InfoCards />
+				<InfoCards />
+			</div>
+			<div class="w-full h-auto bg-white flex justify-center rounded-3xl">
+				<Chart />
+			</div>
+		</div>
+		<div class="w-3/12 bg-white">
+
+		</div>
 	</div>
 </template>
 
 <script>
 
 import Chart from './Chart';
+import InfoCards from './InfoCards';
 
 export default {
 	name: 'Main',
 
-	components: {Chart},
+	components: {InfoCards, Chart},
 }
 
 </script>
