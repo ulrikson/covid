@@ -1,6 +1,6 @@
 <template>
     <div class="w-90/100">
-        <line-chart :chart-data="datacollection" :options="options"></line-chart>
+        <line-chart :chart-data="datacollection" :options="options" style="max-height: 50vh"></line-chart>
     </div>
 </template>
 
