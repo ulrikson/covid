@@ -1,6 +1,6 @@
 <template>
     <div class="w-90/100">
-        <line-chart :chart-data="datacollection" :options="options" style="max-height: 50vh"></line-chart>
+        <line-chart :chart-data="datacollection" :options="options" style="max-height: 45vh"></line-chart>
     </div>
 </template>
 
@@ -24,18 +24,10 @@ export default {
                 responsive: true,
                 scales: {
                     xAxes: [{
-                        gridLines: {
-                            display: false
-                        },
-                        ticks: {
-                            display: false
-                        }
-
+                        display: false
                     }],
                     yAxes: [{
-                        gridLines: {
-                            display: false
-                        }
+                        display: false
                     }]
                 },
                 elements: {
@@ -69,7 +61,7 @@ export default {
         
         fillData() {
             var ctx = document.getElementById('line-chart').getContext("2d");
-            var gradientFill = ctx.createLinearGradient(0, 0, 0, 850); // numbers control x1,x2,y1,y2
+            var gradientFill = ctx.createLinearGradient(0, 0, 0, 350); // numbers control x1,x2,y1,y2
 
             gradientFill.addColorStop(0, 'rgba(40, 95, 213, 0.8)') // show this color at 0%;
             gradientFill.addColorStop(0.5, 'rgba(40, 95, 213, 0.5)'); // show this color at 50%

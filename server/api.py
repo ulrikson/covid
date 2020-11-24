@@ -106,7 +106,6 @@ def timeline():
 
     query = text("""
      SELECT report_date, confirmed FROM sweden
-     WHERE report_date > '2020-11-01'
     """)
 
     result = conn.execute(query).fetchall()
@@ -124,6 +123,3 @@ def timeline():
     }
 
     return json
-
-
-updateDb()

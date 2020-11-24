@@ -3,14 +3,16 @@
 		<div class="w-17/24 p-8 rounded-l-3xl bg-light">
 			<div>
 				<h1 class="font-bold text-xl text-superdark">COVID I SVERIGE</h1>
-				<p class="text-gray-500">Total statistik</p>
 			</div>
 			<div class="flex justify-between py-8">
 				<InfoCards />
 				<InfoCards />
 				<InfoCards />
 			</div>
-			<div class="w-full h-auto bg-white flex justify-center rounded-3xl">
+			<div class="pt-0 pb-8">
+				<div class="w-full h-12 bg-white rounded-3xl"></div>
+			</div>
+			<div class="w-full bg-white flex justify-center rounded-3xl">
 				<Chart />
 			</div>
 		</div>
