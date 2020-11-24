@@ -1,5 +1,5 @@
 import requests
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from sqlalchemy import create_engine, text
 import psycopg2
 
@@ -56,10 +56,14 @@ def lastDbDate():
     conn = dbConnect()
 
     query = text("""
-        SELECT MAX(date) FROM sweden
+        SELECT MAX(report_date) FROM sweden
     """)
 
     result = conn.execute(query).fetchone()
+
+    if result[0] == None:
+        firstCovidCase = '2020-02-25'
+        result = [datetime.strptime(firstCovidCase, '%Y-%m-%d').date()]
 
     conn.dispose()
 
@@ -120,3 +124,6 @@ def timeline():
     }
 
     return json
+
+
+updateDb()
