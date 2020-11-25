@@ -17,7 +17,7 @@ export default {
     
     data() {
 		return {
-            datacollection: null,
+            datacollection: {},
 
             options: {
                 maintainAspectRatio: false,
@@ -55,7 +55,7 @@ export default {
 			axios.get('http://localhost:5000/timeline')
             .then((res) => {
                 this.timeline = res.data;
-                this.fillData()
+                this.fillData();
             });
         },
         

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
-from api import timeline
+from api import timeline, updateDb
 
 # instantiate the app
 app = Flask(__name__)
@@ -16,6 +16,11 @@ def index():
 @app.route('/timeline', methods=['GET'])
 def getTimeline():
     return timeline()
+
+
+@app.route('/refresh', methods=['GET'])
+def getFreshData():
+    return updateDb()
 
 
 if __name__ == '__main__':

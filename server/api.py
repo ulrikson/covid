@@ -78,6 +78,10 @@ def updateDb():
     end =  yesterday
     delta = end - start
 
+    # if already updated today
+    if start == end:
+        return 'already updated'
+
     # db connect
     conn = dbConnect()
 
