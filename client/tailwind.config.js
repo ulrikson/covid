@@ -9,9 +9,8 @@ module.exports = {
         '90/100': '90%' 
       },
       colors: {
-        superdark: '#020D5C',
-        dark: '#0037A0',
-        light: '#F8F9FD'
+        dark: '#101821',
+        semiDark: '#1a2940' ,
       }
     },
   },

@@ -1,6 +1,6 @@
 <template>
     <div class="w-90/100">
-        <line-chart :chart-data="datacollection" :options="options" style="max-height: 45vh"></line-chart>
+        <line-chart :chart-data="datacollection" :options="options"></line-chart>
     </div>
 </template>
 
@@ -35,8 +35,8 @@ export default {
                         radius: 0
                     },
                     line: {
-                        borderColor: '#285FD5',
-                        borderWidth: 10 
+                        // borderColor: 'rgba(244,31,220,1)',
+                        borderWidth: 5 
                     }
                 },
                 legend: {
@@ -60,18 +60,23 @@ export default {
         },
         
         fillData() {
-            var ctx = document.getElementById('line-chart').getContext("2d");
-            var gradientFill = ctx.createLinearGradient(0, 0, 0, 350); // numbers control x1,x2,y1,y2
+            const ctx = document.getElementById('line-chart').getContext("2d");
+            const gradientBorder = ctx.createLinearGradient(100, 0, 1500, 0);
+            const gradientFill = ctx.createLinearGradient(100, 0, 1500, 0);
 
-            gradientFill.addColorStop(0, 'rgba(40, 95, 213, 0.8)') // show this color at 0%;
-            gradientFill.addColorStop(0.5, 'rgba(40, 95, 213, 0.5)'); // show this color at 50%
-            gradientFill.addColorStop(1, 'rgba(40, 95, 213, 0'); // show this color at 100%
+            gradientBorder.addColorStop(0, "rgba(0, 43, 220, 1)");
+            gradientBorder.addColorStop(1, "rgba(50, 222, 212, 1)");
+
+            gradientFill.addColorStop(0, "rgba(0, 43, 220, 0.6)");
+            gradientFill.addColorStop(1, "rgba(50, 222, 212, 0.6)");
+
 
             this.datacollection = {
                 labels: this.timeline.labels,
                 datasets: [
                     {
                         backgroundColor: gradientFill,
+                        borderColor: gradientBorder,
                         data: this.timeline.confirmed
                     }
                 ]
