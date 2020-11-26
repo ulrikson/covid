@@ -80,7 +80,7 @@ export default {
                     {
                         backgroundColor: gradientFill,
                         borderColor: gradientBorder,
-                        data: this.timeline.confirmed_diff
+                        data: this.timeline.covid_data
                     }
                 ]
             }

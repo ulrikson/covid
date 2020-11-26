@@ -94,12 +94,12 @@ def timeline(scope):
 
     # convert into 2 array (to start with), date (label) and confirmed (data)
     labels = [data[0].strftime("%Y-%m-%d") for data in result]
-    confirmed_diff = [data[1] for data in result]
+    covid_data = [data[1] for data in result]
 
     # converting to dict
     json = {
         'labels': labels,
-        'confirmed_diff': confirmed_diff
+        'covid_data': covid_data
     }
 
     return json
