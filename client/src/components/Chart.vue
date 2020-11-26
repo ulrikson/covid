@@ -47,15 +47,12 @@ export default {
 	},
 
 	mounted() {
-        const covidStart = '2020-02-25'
-		this.getTimeline(covidStart);
+		this.getTimeline();
 	},
 
 	methods: {
-		getTimeline(scope) {
-			axios.post('http://localhost:5000/timeline', {
-                startDate: scope
-            })
+		getTimeline() {
+			axios.get('http://localhost:5000/timeline')
             .then((res) => {
                 this.timeline = res.data;
                 this.fillData();

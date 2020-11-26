@@ -7,7 +7,7 @@
 			</div>
 			<div class="py-8">
 				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
-					<a v-for="(choice, i) in choices" :key="i" href="javascript:void(0);" @click.prevent="changeScope(choice.daysDiff)" class="bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl opacity-80">{{choice.text}}</a>
+					<!-- <a v-for="(choice, i) in choices" :key="i" href="javascript:void(0);" @click.prevent="changeScope(choice.daysDiff)" class="bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl opacity-80">{{choice.text}}</a> -->
 				</div>
 			</div>
 			<div class="w-full bg-semiDark flex justify-center rounded-3xl pb-10">

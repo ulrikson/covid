@@ -79,13 +79,18 @@ def updateDb():
     return 'success'
 
 
-def timeline(scope):
+def timeline():
     # sql query to fetch all data points
     conn = dbConnect()
 
     query = text(f"""
-     SELECT report_date, confirmed_diff FROM sweden
-     WHERE report_date > '{scope['startDate']}'
+        SELECT
+            DATE_PART('week', report_date) AS WEEK,
+            DATE_PART('year', report_date) AS YEAR,
+            SUM(confirmed_diff) AS confirmed_diff
+        FROM sweden
+        group by YEAR, WEEK
+        order by YEAR, WEEK
     """)
 
     result = conn.execute(query).fetchall()
@@ -93,8 +98,8 @@ def timeline(scope):
     conn.dispose()
 
     # convert into 2 array (to start with), date (label) and confirmed (data)
-    labels = [data[0].strftime("%Y-%m-%d") for data in result]
-    covid_data = [data[1] for data in result]
+    labels = [data[0] for data in result]
+    covid_data = [data[2] for data in result]
 
     # converting to dict
     json = {
