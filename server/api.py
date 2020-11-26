@@ -10,38 +10,15 @@ def dbConnect():
     return conn
 
 
-def fetch(date):
+def fetch(dateFrom, dateTo):
     params = {
-        'date': date,
-        'iso': 'SWE'
+        'dateFrom': dateFrom,
+        'dateTo': dateTo,
     }
 
-    response = requests.get('https://covid-api.com/api/reports', params=params)
+    response = requests.get('https://api.covid19api.com/country/sweden', params=params)
     data = response.json()
     return data
-
-
-def aggregate(data):
-    
-    # create new dict with value for date (first results date)
-    aggregated = {
-        'confirmed': 0,
-        'deaths': 0,
-        'recovered': 0,
-        'active': 0,
-        'confirmed_diff': 0,
-        'deaths_diff': 0,
-        'recovered_diff': 0,
-        'active_diff': 0
-    }
-
-    # for loop and add to the values
-    for key in aggregated:
-        for region in data['data']:
-            aggregated[key] += region[key]
-
-    # return new dict with aggregated data
-    return aggregated
 
 
 def lastDbDate():
@@ -68,7 +45,6 @@ def updateDb():
     start = lastDbDate()
     yesterday = date.today() - timedelta(days=1)
     end =  yesterday
-    delta = end - start
 
     # if already updated today
     if start == end:
@@ -77,17 +53,24 @@ def updateDb():
     # db connect
     conn = dbConnect()
 
-    # looping dates in timedelta, fetching that days data from API and inserting into DB
-    for i in range(delta.days + 1):
-        day = start + timedelta(days=i)
-        
-        data = fetch(day)
-        aggregated = aggregate(data)
+    data = fetch(start, end)
 
-        query = text(f"""
-            INSERT INTO sweden (report_date, confirmed, deaths, recovered, active, confirmed_diff, deaths_diff, recovered_diff, active_diff)
-            VALUES ('{day}', '{aggregated["confirmed"]}', '{aggregated["deaths"]}', '{aggregated["recovered"]}', '{aggregated["active"]}', '{aggregated["confirmed_diff"]}', '{aggregated["deaths_diff"]}', '{aggregated["recovered_diff"]}', '{aggregated["active_diff"]}')
-        """)
+    # Looping and comparing to the day before
+    for index,day in enumerate(data):
+        current = data[index]
+        last = data[index-1]
+
+        if index > 0:
+            query = text(f"""
+                INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
+                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]-last["Confirmed"]}', '{current["Deaths"]}', '{current["Deaths"]-last["Deaths"]}')
+            """)
+        else:
+            query = text(f"""
+                INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
+                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]}', '{current["Deaths"]}', '{current["Deaths"]}' )
+            """)
+
 
         conn.execute(query)
     
