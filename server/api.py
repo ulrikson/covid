@@ -29,6 +29,10 @@ def aggregate(data):
         'deaths': 0,
         'recovered': 0,
         'active': 0,
+        'confirmed_diff': 0,
+        'deaths_diff': 0,
+        'recovered_diff': 0,
+        'active_diff': 0
     }
 
     # for loop and add to the values
@@ -38,18 +42,6 @@ def aggregate(data):
 
     # return new dict with aggregated data
     return aggregated
-
-
-def getFromDB():
-    conn = dbConnect()
-
-    query = text("""
-        SELECT * FROM sweden
-    """)
-    
-    result = conn.execute(query).fetchone()
-
-    print(result)
 
 
 def lastDbDate():
@@ -93,8 +85,8 @@ def updateDb():
         aggregated = aggregate(data)
 
         query = text(f"""
-            INSERT INTO sweden (report_date, confirmed, deaths, recovered, active)
-            VALUES ('{day}', '{aggregated["confirmed"]}', '{aggregated["deaths"]}', '{aggregated["recovered"]}', '{aggregated["active"]}')
+            INSERT INTO sweden (report_date, confirmed, deaths, recovered, active, confirmed_diff, deaths_diff, recovered_diff, active_diff)
+            VALUES ('{day}', '{aggregated["confirmed"]}', '{aggregated["deaths"]}', '{aggregated["recovered"]}', '{aggregated["active"]}', '{aggregated["confirmed_diff"]}', '{aggregated["deaths_diff"]}', '{aggregated["recovered_diff"]}', '{aggregated["active_diff"]}')
         """)
 
         conn.execute(query)
@@ -109,7 +101,7 @@ def timeline(scope):
     conn = dbConnect()
 
     query = text(f"""
-     SELECT report_date, confirmed FROM sweden
+     SELECT report_date, confirmed_diff FROM sweden
      WHERE report_date > '{scope['startDate']}'
     """)
 
@@ -119,12 +111,12 @@ def timeline(scope):
 
     # convert into 2 array (to start with), date (label) and confirmed (data)
     labels = [data[0].strftime("%Y-%m-%d") for data in result]
-    confirmed = [data[1] for data in result]
+    confirmed_diff = [data[1] for data in result]
 
     # converting to dict
     json = {
         'labels': labels,
-        'confirmed': confirmed
+        'confirmed_diff': confirmed_diff
     }
 
     return json
