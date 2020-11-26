@@ -47,12 +47,15 @@ export default {
 	},
 
 	mounted() {
-		this.getTimeline();
+        const covidStart = '2020-02-25'
+		this.getTimeline(covidStart);
 	},
 
 	methods: {
-		getTimeline() {
-			axios.get('http://localhost:5000/timeline')
+		getTimeline(scope) {
+			axios.post('http://localhost:5000/timeline', {
+                startDate: scope
+            })
             .then((res) => {
                 this.timeline = res.data;
                 this.fillData();
@@ -61,8 +64,8 @@ export default {
         
         fillData() {
             const ctx = document.getElementById('line-chart').getContext("2d");
-            const gradientBorder = ctx.createLinearGradient(100, 0, 1500, 0);
-            const gradientFill = ctx.createLinearGradient(100, 0, 1500, 0);
+            const gradientBorder = ctx.createLinearGradient(100, 0, 1000, 0);
+            const gradientFill = ctx.createLinearGradient(100, 0, 1000, 0);
 
             gradientBorder.addColorStop(0, "rgba(0, 43, 220, 1)");
             gradientBorder.addColorStop(1, "rgba(50, 222, 212, 1)");

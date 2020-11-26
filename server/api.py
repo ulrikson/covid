@@ -104,12 +104,13 @@ def updateDb():
     return 'success'
 
 
-def timeline():
+def timeline(scope):
     # sql query to fetch all data points
     conn = dbConnect()
 
-    query = text("""
+    query = text(f"""
      SELECT report_date, confirmed FROM sweden
+     WHERE report_date > '{scope['startDate']}'
     """)
 
     result = conn.execute(query).fetchall()

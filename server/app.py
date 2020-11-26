@@ -13,9 +13,11 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/timeline', methods=['GET'])
+@app.route('/timeline', methods=['POST'])
+@cross_origin()
 def getTimeline():
-    return timeline()
+    scope = request.get_json()
+    return timeline(scope)
 
 
 @app.route('/refresh', methods=['GET'])
