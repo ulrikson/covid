@@ -45,6 +45,9 @@ export default {
                 },
                 legend: {
                     display: false
+                },
+                tooltips: {
+                    enabled: false
                 }
             }
 		}
