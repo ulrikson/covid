@@ -7,7 +7,13 @@
 			</div>
 			<div class="py-8">
 				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
-					<a v-for="(choice, i) in choices" :key="i" href="javascript:void(0);" @click.prevent="changeTimeline(choice)" class="bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl opacity-80">{{choice.text}}</a>
+					<a 
+					v-for="(choice, i) in choices" :key="i" href="javascript:void(0);" 
+					@click.prevent="changeTimeline(choice)" 
+					:class="['bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl hover:opacity-50', chosenStat == choice.statistica ? 'opacity-50' : 'opacity-80']"
+					>
+					{{choice.text}}
+				</a>
 				</div>
 			</div>
 			<div class="w-full bg-semiDark flex justify-center rounded-3xl py-10">
@@ -35,7 +41,7 @@ export default {
 	data() {
 		return {
 			loading: false,
-			chartData: '',
+			chosenStat: 'deaths_diff',
 			choices: {
 				deaths: {
 					statistica: 'deaths_diff',
@@ -60,8 +66,9 @@ export default {
 		},
 
 		changeTimeline (settings) {
+			this.chosenStat = settings.statistica;
 			this.$refs.lineChart.getTimeline(settings);
-		}
+		},
 	}
 }
 
