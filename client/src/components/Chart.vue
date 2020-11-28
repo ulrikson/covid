@@ -72,11 +72,12 @@ export default {
             const gradientBorder = ctx.createLinearGradient(100, 0, 1000, 0);
             const gradientFill = ctx.createLinearGradient(100, 0, 1000, 0);
 
-            gradientBorder.addColorStop(0, "rgba(0, 43, 220, 1)");
-            gradientBorder.addColorStop(1, "rgba(50, 222, 212, 1)");
+            // gradientBorder.addColorStop(0, "rgba(0, 43, 220, 1)");
+            gradientBorder.addColorStop(0, "rgba(37, 99, 235, 1)"); // bg-blue-600
+            gradientBorder.addColorStop(1, "rgba(167, 243, 208, 1)"); // bg-green-200
 
-            gradientFill.addColorStop(0, "rgba(0, 43, 220, 0.6)");
-            gradientFill.addColorStop(1, "rgba(50, 222, 212, 0.6)");
+            gradientFill.addColorStop(0, "rgba(37, 99, 235, 0.6)"); // bg-blue-600
+            gradientFill.addColorStop(1, "rgba(167, 243, 208, 0.6)"); // bg-green-200
 
 
             this.datacollection = {

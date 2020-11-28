@@ -8,7 +8,10 @@
 			<div class="py-8">
 				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
 					<a v-for="(btn, i) in buttons.stats" :key="i" href="javascript:void(0);" @click.prevent="changeStatistica(btn.statistica)">
-						<stat-button :text="btn.text" :chosen="choices.statistica == btn.statistica"/>
+						<stat-button :text="btn.text" :bgColor="'bg-blue-600'" :chosen="choices.statistica == btn.statistica"/>
+					</a>
+					<a v-for="(btn, i) in buttons.periods" :key="i" href="javascript:void(0);" @click.prevent="changePeriod(btn.period)">
+						<stat-button :text="btn.text" :bgColor="'bg-green-200'" :chosen="choices.period == btn.period"/>
 					</a>
 				</div>
 			</div>
@@ -55,14 +58,18 @@ export default {
 					},
 				},
 				periods: {
+					daily: {
+						period: 'doy',
+						text: 'Dag'
+					},
 					weekly: {
 						period: 'week',
-						text: 'Per vecka'
+						text: 'Vecka'
 					},
 					monthly: {
 						period: 'month',
-						text: 'Per månad'
-					}
+						text: 'Månad'
+					},
 				}
 			}
 		}
@@ -80,7 +87,11 @@ export default {
 
 		changeStatistica (setting) {
 			this.choices.statistica = setting;
+			this.$refs.lineChart.getTimeline(this.choices);
+		},
 
+		changePeriod (setting) {
+			this.choices.period = setting;
 			this.$refs.lineChart.getTimeline(this.choices);
 		},
 	}
