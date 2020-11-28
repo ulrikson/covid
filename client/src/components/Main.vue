@@ -8,10 +8,9 @@
 			<div class="py-8">
 				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
 					<a 
-						v-for="(stat, i) in choices.statisticas" :key="i" href="javascript:void(0);" 
-						@click.prevent="changeTimeline(stat)" 
-						:class="['bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl hover:opacity-50', chosenStat == stat.statistica ? 'opacity-50' : 'opacity-80']"
-					>
+					v-for="(stat, i) in buttons.statisticas" :key="i" href="javascript:void(0);" 
+					@click.prevent="changeStatistica(stat)" 
+					:class="['bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl hover:opacity-50', choices.statistica == stat.statistica ? 'opacity-50' : 'opacity-80']">
 					{{stat.text}}
 					</a>
 				</div>
@@ -41,9 +40,12 @@ export default {
 	data() {
 		return {
 			loading: false,
-			chosenStat: 'deaths_diff',
 			choices: {
-				statisticas : {
+				statistica: 'deaths_diff',
+				period: 'week'
+			},
+			buttons: {
+				statisticas: {
 					deaths: {
 						statistica: 'deaths_diff',
 						text: 'Döda'
@@ -52,6 +54,16 @@ export default {
 						statistica: 'confirmed_diff',
 						text: 'Bekräftade'
 					},
+				},
+				periods: {
+					weekly: {
+						period: 'week',
+						text: 'Per vecka'
+					},
+					monthly: {
+						period: 'month',
+						text: 'Per månad'
+					}
 				}
 			}
 		}
@@ -67,9 +79,10 @@ export default {
             });
 		},
 
-		changeTimeline (settings) {
-			this.chosenStat = settings.statistica;
-			this.$refs.lineChart.getTimeline(settings);
+		changeStatistica (settings) {
+			this.choices.statistica = settings.statistica;
+
+			this.$refs.lineChart.getTimeline(this.choices);
 		},
 	}
 }

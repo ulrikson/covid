@@ -91,7 +91,7 @@ def timeline(settings):
 
     query = text(f"""
         SELECT
-            DATE_PART('week', report_date) AS SCOPE,
+            DATE_PART('{settings['period']}', report_date) AS SCOPE,
             DATE_PART('year', report_date) AS YEAR,
             SUM({settings['statistica']}) AS {settings['statistica']}
         FROM sweden

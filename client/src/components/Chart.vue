@@ -19,6 +19,7 @@ export default {
 		return {
             settings: {
                 statistica: 'deaths_diff',
+                period: 'week'
             },
 
             datacollection: {},
@@ -56,7 +57,8 @@ export default {
 	methods: {
 		getTimeline(settings) {
 			axios.post('http://localhost:5000/timeline', {
-                statistica: settings.statistica
+                statistica: settings.statistica,
+                period: settings.period
             })
             .then((res) => {
                 this.timeline = res.data;
