@@ -87,7 +87,7 @@ def timeline(settings):
         SELECT
             DATE_PART('week', report_date) AS SCOPE,
             DATE_PART('year', report_date) AS YEAR,
-            SUM(deaths_diff) AS {settings['statistica']}
+            SUM({settings['statistica']}) AS {settings['statistica']}
         FROM sweden
         group by YEAR, SCOPE
         order by YEAR, SCOPE
@@ -99,12 +99,12 @@ def timeline(settings):
 
     # convert into 2 array (to start with), date (label) and confirmed (data)
     labels = [data[0] for data in result]
-    covid_data = [data[2] for data in result]
+    covidData = [data[2] for data in result]
 
     # converting to dict
     json = {
         'labels': labels,
-        'covid_data': covid_data
+        'covid_data': covidData
     }
 
     return json

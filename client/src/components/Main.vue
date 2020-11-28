@@ -7,10 +7,10 @@
 			</div>
 			<div class="py-8">
 				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
-					<!-- <a v-for="(choice, i) in choices" :key="i" href="javascript:void(0);" @click.prevent="changeScope(choice.daysDiff)" class="bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl opacity-80">{{choice.text}}</a> -->
+					<a v-for="(choice, i) in choices" :key="i" href="javascript:void(0);" @click.prevent="changeTimeline(choice)" class="bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl opacity-80">{{choice.text}}</a>
 				</div>
 			</div>
-			<div class="w-full bg-semiDark flex justify-center rounded-3xl pb-10">
+			<div class="w-full bg-semiDark flex justify-center rounded-3xl py-10">
 				<chart ref="lineChart"/>
 			</div>
 		</div>
@@ -20,7 +20,6 @@
 <script>
 
 import axios from 'axios';
-import moment from 'moment';
 
 import RefreshIcon from './RefreshIcon.vue';
 import Chart from './Chart.vue';
@@ -39,18 +38,14 @@ export default {
 			chartData: '',
 			currentScope: '2020-02-25',
 			choices: {
-				last7: {
-					daysDiff: 7,
-					text: 'Senaste 7'
+				deaths: {
+					statistica: 'deaths_diff',
+					text: 'Döda'
 				},
 				last30: {
-					daysDiff: 30,
-					text: 'Senaste 30'
+					statistica: 'confirmed_diff',
+					text: 'Bekräftade'
 				},
-				allTime: {
-					daysDiff: 1000,
-					text: 'Från början'
-				}
 			}
 		}
 	},
@@ -65,9 +60,8 @@ export default {
             });
 		},
 
-		changeScope (daysDiff) {
-			this.currentScope = moment().subtract(daysDiff, 'days').format('YYYY-M-D')
-			this.$refs.lineChart.getTimeline(this.currentScope);
+		changeTimeline (settings) {
+			this.$refs.lineChart.getTimeline(settings);
 		}
 	}
 }

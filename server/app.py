@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
-from api import timeline, updateDb, pong
+from api import timeline, updateDb
 
 # instantiate the app
 app = Flask(__name__)

@@ -24,8 +24,8 @@ export default {
             datacollection: {},
 
             options: {
-                maintainAspectRatio: false,
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
                         display: false
@@ -39,7 +39,6 @@ export default {
                         radius: 0
                     },
                     line: {
-                        // borderColor: 'rgba(244,31,220,1)',
                         borderWidth: 5 
                     }
                 },
@@ -67,6 +66,7 @@ export default {
         
         fillData() {
             const ctx = document.getElementById('line-chart').getContext("2d");
+
             const gradientBorder = ctx.createLinearGradient(100, 0, 1000, 0);
             const gradientFill = ctx.createLinearGradient(100, 0, 1000, 0);
 
