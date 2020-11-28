@@ -7,11 +7,8 @@
 			</div>
 			<div class="py-8">
 				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
-					<a 
-					v-for="(stat, i) in buttons.statisticas" :key="i" href="javascript:void(0);" 
-					@click.prevent="changeStatistica(stat)" 
-					:class="['bg-greenBlue text-dark mx-2 py-1 px-2 rounded-3xl hover:opacity-50', choices.statistica == stat.statistica ? 'opacity-50' : 'opacity-80']">
-					{{stat.text}}
+					<a v-for="(btn, i) in buttons.stats" :key="i" href="javascript:void(0);" @click.prevent="changeStatistica(btn.statistica)">
+						<stat-button :text="btn.text" :chosen="choices.statistica == btn.statistica"/>
 					</a>
 				</div>
 			</div>
@@ -28,6 +25,7 @@ import axios from 'axios';
 
 import RefreshIcon from './RefreshIcon.vue';
 import Chart from './Chart.vue';
+import StatButton from './StatButton.vue';
 
 export default {
 	name: 'Main',
@@ -35,6 +33,7 @@ export default {
 	components: {
 		Chart,
 		RefreshIcon,
+		StatButton
 	},
 
 	data() {
@@ -45,7 +44,7 @@ export default {
 				period: 'week'
 			},
 			buttons: {
-				statisticas: {
+				stats: {
 					deaths: {
 						statistica: 'deaths_diff',
 						text: 'Döda'
@@ -79,8 +78,8 @@ export default {
             });
 		},
 
-		changeStatistica (settings) {
-			this.choices.statistica = settings.statistica;
+		changeStatistica (setting) {
+			this.choices.statistica = setting;
 
 			this.$refs.lineChart.getTimeline(this.choices);
 		},
