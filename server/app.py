@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
-from api import timeline, updateDb
+from api import timeline, updateDb, pong
 
 # instantiate the app
 app = Flask(__name__)
@@ -13,10 +13,16 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/timeline', methods=['GET'])
+@app.route('/ping', methods=['GET'])
+def pingpong():
+    return pong()
+
+
+@app.route('/timeline', methods=['POST'])
 @cross_origin()
 def getTimeline():
-    return timeline()
+    settings = request.get_json()
+    return timeline(settings)
 
 
 @app.route('/refresh', methods=['GET'])

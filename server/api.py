@@ -79,18 +79,18 @@ def updateDb():
     return 'success'
 
 
-def timeline():
+def timeline(settings):
     # sql query to fetch all data points
     conn = dbConnect()
 
     query = text(f"""
         SELECT
-            DATE_PART('week', report_date) AS WEEK,
+            DATE_PART('week', report_date) AS SCOPE,
             DATE_PART('year', report_date) AS YEAR,
-            SUM(confirmed_diff) AS confirmed_diff
+            SUM(deaths_diff) AS {settings['statistica']}
         FROM sweden
-        group by YEAR, WEEK
-        order by YEAR, WEEK
+        group by YEAR, SCOPE
+        order by YEAR, SCOPE
     """)
 
     result = conn.execute(query).fetchall()
@@ -108,3 +108,7 @@ def timeline():
     }
 
     return json
+
+
+def pong():
+    return 'pong'

@@ -17,6 +17,10 @@ export default {
     
     data() {
 		return {
+            settings: {
+                statistica: 'deaths_diff',
+            },
+
             datacollection: {},
 
             options: {
@@ -47,12 +51,14 @@ export default {
 	},
 
 	mounted() {
-		this.getTimeline();
+		this.getTimeline(this.settings);
 	},
 
 	methods: {
-		getTimeline() {
-			axios.get('http://localhost:5000/timeline')
+		getTimeline(settings) {
+			axios.post('http://localhost:5000/timeline', {
+                statistica: settings.statistica
+            })
             .then((res) => {
                 this.timeline = res.data;
                 this.fillData();
