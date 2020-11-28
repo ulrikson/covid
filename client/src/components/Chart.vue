@@ -68,6 +68,18 @@ export default {
                 this.fillData();
             });
         },
+
+        getMoving(settings) {
+			axios.post('http://localhost:5000/moving', {
+                statistica: settings.statistica,
+                period: 'doy', // always per day
+                window: settings.window
+            })
+            .then((res) => {
+                this.timeline = res.data;
+                this.fillData();
+            });
+        },
         
         fillData() {
             const ctx = document.getElementById('line-chart').getContext("2d");

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
-from api import timeline, updateDb
+from api import timeline, updateDb, movingAverage
 
 # instantiate the app
 app = Flask(__name__)
@@ -18,6 +18,13 @@ def index():
 def getTimeline():
     settings = request.get_json()
     return timeline(settings)
+
+
+@app.route('/moving', methods=['POST'])
+@cross_origin()
+def getMoving():
+    settings = request.get_json()
+    return movingAverage(settings)
 
 
 @app.route('/refresh', methods=['GET'])

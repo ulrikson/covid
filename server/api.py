@@ -2,7 +2,7 @@ import requests
 from datetime import date, timedelta, datetime
 from sqlalchemy import create_engine, text
 import psycopg2
-
+import pandas as pd
 
 def dbConnect():
     uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid"
@@ -114,3 +114,19 @@ def timeline(settings):
     }
 
     return json
+
+
+def movingAverage(settings):
+    data = timeline(settings)
+
+    df = pd.DataFrame(data)
+
+    df['rolling'] = df['covid_data'].rolling(settings['window'], min_periods=1).mean() #! replace with parameter
+
+    json = {
+        'labels': data['labels'],
+        'covid_data': df['rolling'].to_list()
+    }
+
+    return json
+

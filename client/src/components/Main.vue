@@ -1,5 +1,6 @@
 <template>
 	<div class="bg-dark h-screen">
+		<button @click.prevent="getMoving">TEST</button>
 		<div class="w-full p-8">
 			<div class="flex justify-start items-center">
 				<h1 class="font-bold text-xl text-white">COVID I SVERIGE</h1>
@@ -12,6 +13,9 @@
 					</a>
 					<a v-for="(btn, i) in buttons.periods" :key="i" href="javascript:void(0);" @click.prevent="changePeriod(btn.period)">
 						<stat-button :text="btn.text" :bgColor="'bg-green-200'" :chosen="choices.period == btn.period"/>
+					</a>
+					<a href="javascript:void(0);" @click.prevent="getMoving()">
+						<stat-button :text="'5dag MA'" :bgColor="'bg-pink-200'" />
 					</a>
 				</div>
 			</div>
@@ -44,7 +48,8 @@ export default {
 			loading: false,
 			choices: {
 				statistica: 'deaths_diff',
-				period: 'week'
+				period: 'week',
+				window: 5
 			},
 			buttons: {
 				stats: {
@@ -94,6 +99,10 @@ export default {
 			this.choices.period = setting;
 			this.$refs.lineChart.getTimeline(this.choices);
 		},
+
+		getMoving() {
+			this.$refs.lineChart.getMoving(this.choices);
+		}
 	}
 }
 
