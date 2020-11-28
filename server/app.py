@@ -13,11 +13,6 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/ping', methods=['GET'])
-def pingpong():
-    return pong()
-
-
 @app.route('/timeline', methods=['POST'])
 @cross_origin()
 def getTimeline():

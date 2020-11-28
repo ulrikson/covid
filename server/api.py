@@ -108,7 +108,3 @@ def timeline(settings):
     }
 
     return json
-
-
-def pong():
-    return 'pong'
