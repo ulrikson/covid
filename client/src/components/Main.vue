@@ -36,7 +36,6 @@ export default {
 		return {
 			loading: false,
 			chartData: '',
-			currentScope: '2020-02-25',
 			choices: {
 				deaths: {
 					statistica: 'deaths_diff',
@@ -55,7 +54,7 @@ export default {
 			this.loading = true;
 			axios.get('http://localhost:5000/refresh')
             .then(() => {
-				this.$refs.lineChart.getTimeline(this.currentScope);
+				this.$refs.lineChart.getTimeline({statistica: 'deaths_diff'});
 				this.loading = false;
             });
 		},

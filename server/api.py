@@ -12,8 +12,8 @@ def dbConnect():
 
 def fetch(dateFrom, dateTo):
     params = {
-        'dateFrom': dateFrom,
-        'dateTo': dateTo,
+        'from': dateFrom,
+        'to': dateTo,
     }
 
     response = requests.get('https://api.covid19api.com/country/sweden', params=params)
@@ -50,9 +50,8 @@ def updateDb():
     if start == end:
         return 'already updated'
 
-    # db connect
+    # db connect and data fetch
     conn = dbConnect()
-
     data = fetch(start, end)
 
     # Looping and comparing to the day before
@@ -60,17 +59,24 @@ def updateDb():
         current = data[index]
         last = data[index-1]
 
+        # setting the diffs to previous days, replacing negative values with 0
+        confirmedDiff = current["Confirmed"]-last["Confirmed"]
+        deathsDiff = current["Deaths"]-last["Deaths"]
+        daysDiff = {
+            'confirmed_diff': confirmedDiff if confirmedDiff >= 0 else 0,
+            'deaths_diff': deathsDiff if deathsDiff >= 0 else 0,
+        }
+
         if index > 0:
             query = text(f"""
                 INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
-                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]-last["Confirmed"]}', '{current["Deaths"]}', '{current["Deaths"]-last["Deaths"]}')
+                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{daysDiff['confirmed_diff']}', '{current["Deaths"]}', '{daysDiff['deaths_diff']}')
             """)
         else:
             query = text(f"""
                 INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
                 VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]}', '{current["Deaths"]}', '{current["Deaths"]}' )
             """)
-
 
         conn.execute(query)
     
