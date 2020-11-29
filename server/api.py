@@ -3,6 +3,8 @@ from datetime import date, timedelta, datetime
 from sqlalchemy import create_engine, text
 import psycopg2
 import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
 
 def dbConnect():
     uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid"
@@ -130,3 +132,32 @@ def movingAverage(settings):
 
     return json
 
+
+def SimpleLinear():
+    mockSettings = {
+        'period': 'doy',
+        'statistica': 'deaths_diff'
+    } #! replace with parameter
+
+    data = timeline(mockSettings)
+
+    x = np.array(data['labels']).reshape((-1,1))
+    y = np.array(data['covid_data'])
+
+    model = LinearRegression().fit(x, y)
+
+    rSq = model.score(x,y)
+    predictions = model.predict(x).tolist()
+
+    # ! utilize later
+    lastDataLabel = data['labels'][-1]
+    x_future = np.arange(lastDataLabel+1, lastDataLabel+60).reshape(-1,1)
+    futurePredictions = model.predict(x_future)
+
+    json = {
+        'labels': data['labels'],
+        'covid_data': data['covid_data'],
+        'predict': predictions
+    }
+
+    return json
