@@ -48,7 +48,6 @@ export default {
 	data() {
 		return {
 			loading: false,
-			movingActive: false,
 
 			choices: {
 				statistica: 'deaths_diff',
@@ -97,21 +96,21 @@ export default {
 		changeStatistica (setting) {
 			this.choices.statistica = setting;
 
-			if (this.movingActive) {
+			if (this.choices.period == 'moving_average') {
 				this.getMoving()
+			} else if (this.choices.period == 'linear'){
+				this.getLinear()
 			} else {
 				this.$refs.lineChart.getTimeline(this.choices);
 			}
 		},
 
 		changePeriod (setting) {
-			this.movingActive = false;
 			this.choices.period = setting;
 			this.$refs.lineChart.getTimeline(this.choices);
 		},
 
 		getMoving() {
-			this.movingActive = true;
 			this.$refs.lineChart.getMoving(this.choices);
 			this.choices.period = 'moving_average';
 		}
