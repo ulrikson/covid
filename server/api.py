@@ -142,10 +142,8 @@ def simpleLinear(settings):
 
     model = LinearRegression().fit(x, y)
 
-    rSq = model.score(x,y)
+    r_square = model.score(x,y)
     predictions = model.predict(x).tolist()
-
-    # ! replace negatives with 0
 
     # ! utilize later
     # lastDataLabel = data['labels'][-1]
@@ -155,7 +153,8 @@ def simpleLinear(settings):
     json = {
         'labels': data['labels'],
         'covid_data': data['covid_data'],
-        'predict': predictions
+        'predict': predictions,
+        'r_square': r_square
     }
 
     return json

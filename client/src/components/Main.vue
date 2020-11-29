@@ -5,7 +5,7 @@
 				<h1 class="font-bold text-xl text-white">COVID I SVERIGE</h1>
 				<a href="javascript:void(0);" @click.prevent="refreshData"><refresh-icon :class="['ml-2 h-5 w-5 text-white', {'animate-spin': loading}]"/></a>
 			</div>
-			<div class="py-8">
+			<div class="mt-8">
 				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
 					<a v-for="(btn, i) in stats" :key="i" href="javascript:void(0);" @click.prevent="changeStatistica(btn.statistica)">
 						<stat-button :text="btn.text" :bgColor="'bg-blue-600'" :chosen="choices.statistica == btn.statistica"/>
@@ -21,8 +21,11 @@
 					</a>
 				</div>
 			</div>
+			<div class="flex w-full justify-end min-h-8">
+				<p class="text-white">{{extraInfo}}</p>
+			</div>
 			<div class="w-full bg-semiDark flex justify-center rounded-3xl py-10">
-				<chart ref="lineChart"/>
+				<chart ref="lineChart" @extra-info="handleExtraInfo"/>
 			</div>
 		</div>
 	</div>
@@ -48,6 +51,7 @@ export default {
 	data() {
 		return {
 			loading: false,
+			extraInfo: '',
 
 			choices: {
 				statistica: 'deaths_diff',
@@ -103,6 +107,10 @@ export default {
 			} else {
 				this.getStatistica()
 			}
+		},
+
+		handleExtraInfo(info) {
+			this.extraInfo = info;
 		},
 
 		getStatistica () {

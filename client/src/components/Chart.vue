@@ -22,6 +22,8 @@ export default {
                 period: 'week'
             },
 
+            timeline: '',
+
             datacollection: {},
 
             options: {
@@ -91,6 +93,7 @@ export default {
             })
             .then((res) => {
                 this.timeline = res.data;
+                this.$emit('extra-info', res.data.r_square);
                 this.fillData();
             });
         },
