@@ -1,6 +1,5 @@
 <template>
 	<div class="bg-dark h-screen">
-		<button @click.prevent="getMoving">TEST</button>
 		<div class="w-full p-8">
 			<div class="flex justify-start items-center">
 				<h1 class="font-bold text-xl text-white">COVID I SVERIGE</h1>

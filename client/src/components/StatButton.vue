@@ -1,5 +1,5 @@
 <template>
-    <div :class="['text-dark mx-2 py-1 px-2 rounded-3xl hover:opacity-50', bgColor, chosen ? 'opacity-50' : 'chosen-80']">{{text}}</div>
+    <div :class="['text-dark mx-2 py-1 px-2 rounded-3xl hover:opacity-100', bgColor, chosen ? 'opacity-100' : 'opacity-50']">{{text}}</div>
 </template>
 
 <script>

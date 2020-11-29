@@ -27,6 +27,9 @@ export default {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    easing: 'easeOutQuart'
+                },
                 scales: {
                     xAxes: [{
                         display: false
