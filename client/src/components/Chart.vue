@@ -83,28 +83,40 @@ export default {
                 this.fillData();
             });
         },
+
+        getLinear(settings) {
+            axios.post('http://localhost:5000/linear', {
+                statistica: settings.statistica,
+                period: 'doy', // always per day
+            })
+            .then((res) => {
+                this.timeline = res.data;
+                this.fillData();
+            });
+        },
         
         fillData() {
             const ctx = document.getElementById('line-chart').getContext("2d");
 
-            const gradientBorder = ctx.createLinearGradient(100, 0, 1000, 0);
-            const gradientFill = ctx.createLinearGradient(100, 0, 1000, 0);
-
-            // gradientBorder.addColorStop(0, "rgba(0, 43, 220, 1)");
-            gradientBorder.addColorStop(0, "rgba(37, 99, 235, 1)"); // bg-blue-600
-            gradientBorder.addColorStop(1, "rgba(167, 243, 208, 1)"); // bg-green-200
-
-            gradientFill.addColorStop(0, "rgba(37, 99, 235, 0.6)"); // bg-blue-600
-            gradientFill.addColorStop(1, "rgba(167, 243, 208, 0.6)"); // bg-green-200
-
+            const primaryBorder = ctx.createLinearGradient(100, 0, 1000, 0);
+            const primaryFill = ctx.createLinearGradient(100, 0, 1000, 0);
+            primaryBorder.addColorStop(0, "rgba(37, 99, 235, 1)"); // blue-600
+            primaryBorder.addColorStop(1, "rgba(167, 243, 208, 1)"); // green-200
+            primaryFill.addColorStop(0, "rgba(37, 99, 235, 0.6)"); // blue-600
+            primaryFill.addColorStop(1, "rgba(167, 243, 208, 0.6)"); // green-200
 
             this.datacollection = {
                 labels: this.timeline.labels,
                 datasets: [
                     {
-                        backgroundColor: gradientFill,
-                        borderColor: gradientBorder,
+                        backgroundColor: primaryFill,
+                        borderColor: primaryBorder,
                         data: this.timeline.covid_data
+                    },
+                    {
+                        backgroundColor: 'transparent',
+                        borderColor: 'rgba(219, 39, 119, 1)', //pink-600
+                        data: this.timeline.predict
                     }
                 ]
             }

@@ -133,13 +133,9 @@ def movingAverage(settings):
     return json
 
 
-def SimpleLinear():
-    mockSettings = {
-        'period': 'doy',
-        'statistica': 'deaths_diff'
-    } #! replace with parameter
+def simpleLinear(settings):
 
-    data = timeline(mockSettings)
+    data = timeline(settings)
 
     x = np.array(data['labels']).reshape((-1,1))
     y = np.array(data['covid_data'])
@@ -149,10 +145,12 @@ def SimpleLinear():
     rSq = model.score(x,y)
     predictions = model.predict(x).tolist()
 
+    # ! replace negatives with 0
+
     # ! utilize later
-    lastDataLabel = data['labels'][-1]
-    x_future = np.arange(lastDataLabel+1, lastDataLabel+60).reshape(-1,1)
-    futurePredictions = model.predict(x_future)
+    # lastDataLabel = data['labels'][-1]
+    # x_future = np.arange(lastDataLabel+1, lastDataLabel+60).reshape(-1,1)
+    # futurePredictions = model.predict(x_future)
 
     json = {
         'labels': data['labels'],

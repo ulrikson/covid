@@ -10,13 +10,13 @@
 					<a v-for="(btn, i) in stats" :key="i" href="javascript:void(0);" @click.prevent="changeStatistica(btn.statistica)">
 						<stat-button :text="btn.text" :bgColor="'bg-blue-600'" :chosen="choices.statistica == btn.statistica"/>
 					</a>
-					<a v-for="(btn, i) in periods" :key="i" href="javascript:void(0);" @click.prevent="changePeriod(btn.period)">
+					<a v-for="(btn, i) in periods" :key="i" href="javascript:void(0);" @click.prevent="getPeriod(btn.period)">
 						<stat-button :text="btn.text" :bgColor="'bg-green-200'" :chosen="choices.period == btn.period"/>
 					</a>
 					<a href="javascript:void(0);" @click.prevent="getMoving()">
 						<stat-button :text="'5dag MA'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'moving_average'" />
 					</a>
-					<a href="javascript:void(0);" @click.prevent="getMoving()">
+					<a href="javascript:void(0);" @click.prevent="getLinear()">
 						<stat-button :text="'SLR'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'linear'" />
 					</a>
 				</div>
@@ -101,11 +101,15 @@ export default {
 			} else if (this.choices.period == 'linear'){
 				this.getLinear()
 			} else {
-				this.$refs.lineChart.getTimeline(this.choices);
+				this.getStatistica()
 			}
 		},
 
-		changePeriod (setting) {
+		getStatistica () {
+			this.$refs.lineChart.getTimeline(this.choices);
+		},
+
+		getPeriod (setting) {
 			this.choices.period = setting;
 			this.$refs.lineChart.getTimeline(this.choices);
 		},
@@ -113,6 +117,11 @@ export default {
 		getMoving() {
 			this.$refs.lineChart.getMoving(this.choices);
 			this.choices.period = 'moving_average';
+		},
+
+		getLinear() {
+			this.$refs.lineChart.getLinear(this.choices);
+			this.choices.period = 'linear';
 		}
 	}
 }
