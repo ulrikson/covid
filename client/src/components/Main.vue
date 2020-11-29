@@ -14,7 +14,10 @@
 						<stat-button :text="btn.text" :bgColor="'bg-green-200'" :chosen="choices.period == btn.period"/>
 					</a>
 					<a href="javascript:void(0);" @click.prevent="getMoving()">
-						<stat-button :text="'5dag MA'" :bgColor="'bg-pink-200'" :chosen="movingActive" />
+						<stat-button :text="'5dag MA'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'moving_average'" />
+					</a>
+					<a href="javascript:void(0);" @click.prevent="getMoving()">
+						<stat-button :text="'SLR'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'linear'" />
 					</a>
 				</div>
 			</div>
@@ -110,7 +113,7 @@ export default {
 		getMoving() {
 			this.movingActive = true;
 			this.$refs.lineChart.getMoving(this.choices);
-			this.choices.period = '';
+			this.choices.period = 'moving_average';
 		}
 	}
 }
