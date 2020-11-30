@@ -7,7 +7,9 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 def dbConnect():
-    uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid"
+    # LOCAL: uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid"
+    uri = "postgres+psycopg2://qrnelcysspgnui:5116f5d667ef0d8ae939c3fed205672c56d61be8709da95dac56f3e125b4d743@ec2-54-228-209-117.eu-west-1.compute.amazonaws.com:5432/d5kjbe8en9tins"
+
     conn = create_engine(uri)
     return conn
 
@@ -45,16 +47,15 @@ def updateDb():
 
     # creating timedelta for fetching data
     start = lastDbDate()
-    yesterday = date.today() - timedelta(days=1)
-    end =  yesterday
+    end = date.today()
 
     # if already updated today
     if start == end:
-        return 'already updated'
+        return None
 
     # db connect and data fetch
     conn = dbConnect()
-    data = fetch(start, end)
+    data = fetch(start + timedelta(days=1), end)
 
     # Looping and comparing to the day before
     for index,day in enumerate(data):
@@ -69,7 +70,7 @@ def updateDb():
             'deaths_diff': deathsDiff if deathsDiff >= 0 else 0,
         }
 
-        if index > 0:
+        if index > 0 or len(data) == 1:
             query = text(f"""
                 INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
                 VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{daysDiff['confirmed_diff']}', '{current["Deaths"]}', '{daysDiff['deaths_diff']}')

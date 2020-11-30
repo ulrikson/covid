@@ -9,7 +9,7 @@
     [/] R^2 uppe till höger, mellan setting och grafen  
     [x] Knapparna så att det går ihop (justera MovingAvg till mer generell)  
     [] som dessutom predictar 30 dagar framöver  
-[] Få back- och frontend att köra på samma port  
+[x] Få back- och frontend att köra på samma port  
 
 # Stalled
 [] Time Series Methods  
