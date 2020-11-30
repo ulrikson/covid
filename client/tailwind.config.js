@@ -9,7 +9,7 @@ module.exports = {
 				'90/100': '90%' 
 			},
 			minHeight: {
-				'8': '2rem'
+				'8': '2rem',
 			},
 			colors: {
 				dark: '#101821',

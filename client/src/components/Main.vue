@@ -1,12 +1,12 @@
 <template>
-	<div class="bg-dark h-screen">
+	<div class="bg-dark h-screen md:w-screen">
 		<div class="w-full p-8">
 			<div class="flex justify-start items-center">
 				<h1 class="font-bold text-xl text-white">COVID I SVERIGE</h1>
 				<a href="javascript:void(0);" @click.prevent="refreshData"><refresh-icon :class="['ml-2 h-5 w-5 text-white', {'animate-spin': loading}]"/></a>
 			</div>
 			<div class="mt-8">
-				<div class="w-full h-12 px-2 bg-semiDark rounded-3xl flex items-center">
+				<div class="w-full md:h-12 px-2 bg-semiDark rounded-3xl flex flex-wrap items-center">
 					<a v-for="(btn, i) in stats" :key="i" href="javascript:void(0);" @click.prevent="changeStatistica(btn.statistica)">
 						<stat-button :text="btn.text" :bgColor="'bg-blue-600'" :chosen="choices.statistica == btn.statistica"/>
 					</a>
