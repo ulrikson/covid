@@ -1,34 +1,30 @@
 from flask import Flask, render_template, request
-from flask_cors import CORS, cross_origin
-from api import timeline, updateDb, movingAverage, simpleLinear
+from server.api import timeline, updateDb, movingAverage, simpleLinear
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
-# instantiate the app
-app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
-
+# Set up the app and point it to Vue
+app = Flask(__name__, static_folder='../client/dist/',    static_url_path='/')
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return app.send_static_file('index.html')
 
 
 @app.route('/timeline', methods=['POST'])
-@cross_origin()
 def getTimeline():
     settings = request.get_json()
     return timeline(settings)
 
 
 @app.route('/moving', methods=['POST'])
-@cross_origin()
 def getMoving():
     settings = request.get_json()
     return movingAverage(settings)
 
 
 @app.route('/linear', methods=['POST'])
-@cross_origin()
 def getLinear():
     settings = request.get_json()
     return simpleLinear(settings)
@@ -39,5 +35,6 @@ def getFreshData():
     return updateDb()
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host='0.0.0.0', port=port)

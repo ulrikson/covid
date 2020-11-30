@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "cd client && vue-cli-service serve",
-    "start": "gunicorn app:app",
+    "start": "gunicorn server.app:app",
     "build": "cd client && npm run build"
   },
   "dependencies": {
