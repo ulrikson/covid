@@ -90,7 +90,7 @@ export default {
 	methods: {
 		refreshData() {
 			this.loading = true;
-			axios.get('http://localhost:5000/refresh')
+			axios.get('/refresh')
             .then(() => {
 				this.$refs.lineChart.getTimeline({statistica: 'deaths_diff'});
 				this.loading = false;

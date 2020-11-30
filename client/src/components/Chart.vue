@@ -64,7 +64,7 @@ export default {
 
 	methods: {
 		getTimeline(settings) {
-			axios.post('http://localhost:5000/timeline', {
+			axios.post('/timeline', {
                 statistica: settings.statistica,
                 period: settings.period
             })
@@ -75,7 +75,7 @@ export default {
         },
 
         getMoving(settings) {
-			axios.post('http://localhost:5000/moving', {
+			axios.post('/moving', {
                 statistica: settings.statistica,
                 period: 'doy', // always per day
                 window: settings.window
@@ -87,7 +87,7 @@ export default {
         },
 
         getLinear(settings) {
-            axios.post('http://localhost:5000/linear', {
+            axios.post('/linear', {
                 statistica: settings.statistica,
                 period: 'doy', // always per day
             })
