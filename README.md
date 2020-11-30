@@ -10,11 +10,10 @@
     [x] Knapparna så att det går ihop (justera MovingAvg till mer generell)  
     [] som dessutom predictar 30 dagar framöver  
 [x] Få back- och frontend att köra på samma port  
-[] Laddningsanimation (db tar längre tid med)  
 
 # Stalled
 [] Time Series Methods  
-[x] PostgreSQL DB  
+[] PostgreSQL DB  
 [] Heroku free-tier  
 
 # Nice to have:
