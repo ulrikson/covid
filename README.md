@@ -9,14 +9,16 @@
     [/] R^2 uppe till höger, mellan setting och grafen  
     [x] Knapparna så att det går ihop (justera MovingAvg till mer generell)  
     [] som dessutom predictar 30 dagar framöver  
-[x] Få back- och frontend att köra på samma port  
 
 # Stalled
-[] Time Series Methods  
-[x] PostgreSQL DB  
-[] Heroku free-tier  
-[] Purge Tailwind?  
+[] Time Series Methods   
 
 # Nice to have:
 [] tooltips  
 [] mobilanpassning []  
+
+# Devops
+[x] PostgreSQL DB  
+[x] Heroku free-tier  
+[x] Purge Tailwind? 
+[x] Få back- och frontend att köra på samma port  
