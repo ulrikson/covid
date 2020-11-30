@@ -13,8 +13,10 @@
 
 # Stalled
 [] Time Series Methods  
-[] PostgreSQL DB  
+[x] PostgreSQL DB  
 [] Heroku free-tier  
+[] Purge Tailwind?  
 
 # Nice to have:
 [] tooltips  
+[] mobilanpassning []  
