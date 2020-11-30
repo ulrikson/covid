@@ -1,0 +1,50 @@
+{
+  "name": "swe-covid",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "cd client && vue-cli-service serve",
+    "start": "gunicorn app:app",
+    "build": "cd client && npm run build"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.8.6",
+    "axios": "^0.21.0",
+    "chart.js": "^2.9.4",
+    "core-js": "^3.6.5",
+    "moment": "^2.29.1",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1",
+    "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:vue/recommended"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}
