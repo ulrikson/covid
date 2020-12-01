@@ -17,7 +17,7 @@
 						<stat-button :text="'5dag MA'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'moving_average'" />
 					</a>
 					<a href="javascript:void(0);" @click.prevent="getLinear()">
-						<stat-button :text="'SLR'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'linear'" />
+						<stat-button :text="'MLR'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'linear'" />
 					</a>
 				</div>
 			</div>

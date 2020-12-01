@@ -5,6 +5,7 @@ import psycopg2
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
 def dbConnect():
     # uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid" #LOCAL
@@ -88,8 +89,6 @@ def updateDb():
 
     return 'success'
 
-updateDb()
-
 
 def timeline(settings):
     # sql query to fetch all data points
@@ -144,10 +143,14 @@ def simpleLinear(settings):
     x = np.array(data['labels']).reshape((-1,1))
     y = np.array(data['covid_data'])
 
-    model = LinearRegression().fit(x, y)
+    # y = bo + b1x + b2x^2 + b3x^3
+    polynom = PolynomialFeatures(degree=4, include_bias=False).fit_transform(x)
 
-    r_square = model.score(x,y)
-    predictions = model.predict(x).tolist()
+    model = LinearRegression().fit(polynom, y)
+
+
+    r_square = model.score(polynom,y)
+    predictions = model.predict(polynom).tolist()
 
     # ! utilize later
     # lastDataLabel = data['labels'][-1]
@@ -162,3 +165,12 @@ def simpleLinear(settings):
     }
 
     return json
+
+
+# settings = {
+#     'period': 'doy',
+#     'statistica': 'deaths_diff'
+# }
+
+# test = simpleLinear(settings)
+# print(test['r_square'])
