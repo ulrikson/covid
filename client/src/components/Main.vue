@@ -6,6 +6,10 @@
 				<a href="javascript:void(0);" @click.prevent="refreshData"><refresh-icon :class="['ml-2 h-5 w-5 text-white', {'animate-spin': loading}]"/></a>
 			</div>
 			<div class="mt-8">
+				<div class="flex justify-end items-center">
+					<label class="text-gray-400 mr-2 text-xs">Experimentell</label>
+					<input type="checkbox" v-model="experimental" class="h-2.5 w-2.5"/>
+				</div>
 				<div class="w-full md:h-12 px-2 bg-semiDark rounded-3xl flex flex-wrap items-center">
 					<a v-for="(btn, i) in stats" :key="i" href="javascript:void(0);" @click.prevent="changeStatistica(btn.statistica)">
 						<stat-button :text="btn.text" :bgColor="'bg-blue-600'" :chosen="choices.statistica == btn.statistica"/>
@@ -13,10 +17,10 @@
 					<a v-for="(btn, i) in periods" :key="i" href="javascript:void(0);" @click.prevent="getPeriod(btn.period)">
 						<stat-button :text="btn.text" :bgColor="'bg-green-200'" :chosen="choices.period == btn.period"/>
 					</a>
-					<a href="javascript:void(0);" @click.prevent="getMoving()">
+					<a v-if="experimental" href="javascript:void(0);" @click.prevent="getMoving()">
 						<stat-button :text="'5dag MA'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'moving_average'" />
 					</a>
-					<a href="javascript:void(0);" @click.prevent="getLinear()">
+					<a v-if="experimental" href="javascript:void(0);" @click.prevent="getLinear()">
 						<stat-button :text="'MLR'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'linear'" />
 					</a>
 				</div>
@@ -59,6 +63,8 @@ export default {
 	data() {
 		return {
 			loading: false,
+			experimental: false,
+
 			extraInfo: {
 				rSquare: ''
 			},
