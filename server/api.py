@@ -7,8 +7,8 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 def dbConnect():
-    # LOCAL: uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid"
-    uri = "postgres+psycopg2://qrnelcysspgnui:5116f5d667ef0d8ae939c3fed205672c56d61be8709da95dac56f3e125b4d743@ec2-54-228-209-117.eu-west-1.compute.amazonaws.com:5432/d5kjbe8en9tins"
+    # uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid" #LOCAL
+    uri = "postgres+psycopg2://odcvsrneqygagr:faa8ba613866ce9b68fda849c5752268684b07c77cdbcc4924386c70b8a993af@ec2-52-208-138-246.eu-west-1.compute.amazonaws.com:5432/df3b0t7h21j3io"
 
     conn = create_engine(uri)
     return conn
@@ -49,13 +49,13 @@ def updateDb():
     start = lastDbDate()
     end = date.today()
 
-    # if already updated today
-    if start == end:
+    # if updated today or yesterday (api has a 1 day delay)
+    if start >= end-timedelta(days=1):
         return None
 
     # db connect and data fetch
     conn = dbConnect()
-    data = fetch(start + timedelta(days=1), end)
+    data = fetch(start+timedelta(days=1), end)
 
     # Looping and comparing to the day before
     for index,day in enumerate(data):
@@ -82,10 +82,13 @@ def updateDb():
             """)
 
         conn.execute(query)
+        # print(query) # for debugging
     
     conn.dispose()
 
     return 'success'
+
+updateDb()
 
 
 def timeline(settings):
