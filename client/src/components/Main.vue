@@ -1,11 +1,17 @@
 <template>
-	<div class="bg-dark h-screen md:w-screen">
+	<div class="h-screen md:w-screen">
 		<div class="w-full p-8">
 			<div class="flex justify-start items-center">
 				<h1 class="font-bold text-xl text-white">COVID I SVERIGE</h1>
 				<a href="javascript:void(0);" @click.prevent="refreshData"><refresh-icon :class="['ml-2 h-5 w-5 text-white', {'animate-spin': loading}]"/></a>
 			</div>
-			<div class="mt-8">
+			<div class="flex flex-wrap">
+				<!-- for-loop? -->
+				<div class="flex items-center mt-4 bg-semiDark rounded-3xl px-3 py-2 text-sm text-gray-400">
+					<confirmed-icon class="mr-2 h-5 w-5 text-red-200"/>250.000 bekräftade
+				</div>
+			</div>
+			<div class="mt-4">
 				<div class="flex justify-end items-center">
 					<label class="text-gray-400 mr-2 text-xs">Experimentell</label>
 					<input type="checkbox" v-model="experimental" class="h-2.5 w-2.5"/>
@@ -18,10 +24,10 @@
 						<stat-button :text="btn.text" :bgColor="'bg-green-200'" :chosen="choices.period == btn.period"/>
 					</a>
 					<a v-if="experimental" href="javascript:void(0);" @click.prevent="getMoving()">
-						<stat-button :text="'5dag MA'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'moving_average'" />
+						<stat-button :text="'5dag MA'" :bgColor="'bg-yellow-200'" :chosen="choices.period == 'moving_average'" />
 					</a>
 					<a v-if="experimental" href="javascript:void(0);" @click.prevent="getLinear()">
-						<stat-button :text="'MLR'" :bgColor="'bg-pink-200'" :chosen="choices.period == 'linear'" />
+						<stat-button :text="'MLR'" :bgColor="'bg-yellow-200'" :chosen="choices.period == 'linear'" />
 					</a>
 				</div>
 			</div>
@@ -39,7 +45,9 @@
 
 import axios from 'axios';
 
-import RefreshIcon from './RefreshIcon.vue';
+import RefreshIcon from './icons/Refresh.vue';
+import ConfirmedIcon from './icons/Confirmed.vue';
+
 import Chart from './Chart.vue';
 import StatButton from './StatButton.vue';
 
@@ -49,6 +57,7 @@ export default {
 	components: {
 		Chart,
 		RefreshIcon,
+		ConfirmedIcon,
 		StatButton
 	},
 
@@ -64,6 +73,7 @@ export default {
 		return {
 			loading: false,
 			experimental: false,
+			latestStats: {},
 
 			extraInfo: {
 				rSquare: ''
@@ -103,6 +113,10 @@ export default {
 		}
 	},
 
+	mounted() {
+		this.getLatest()
+	},
+
 	methods: {
 		refreshData() {
 			this.loading = true;
@@ -111,6 +125,13 @@ export default {
 				this.$refs.lineChart.getTimeline({statistica: 'deaths_diff', period: 'doy'});
 				this.loading = false;
             });
+		},
+
+		getLatest() {
+			axios.get('/latest-stats')
+			.then((res) => {
+				this.latestStats = res.data;
+			})
 		},
 
 		changeStatistica (setting) {

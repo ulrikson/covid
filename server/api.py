@@ -168,9 +168,29 @@ def simpleLinear(settings):
     return json
 
 
+def latestStats():
+    conn = dbConnect()
+
+    query =text("""
+        SELECT report_date, confirmed, deaths FROM sweden
+        ORDER BY report_date DESC
+        LIMIT 1
+    """)
+
+    result = conn.execute(query).fetchone()
+    conn.dispose()
+
+    json = {
+        'confirmed': result[1],
+        'deaths': result[2]
+    }
+
+    return json
+
 settings = {
     'period': 'doy',
     'statistica': 'deaths_diff'
 }
 
-# test = simpleLinear(settings)
+# test = latestStats()
+# print(test)

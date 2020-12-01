@@ -5,12 +5,13 @@
 [x] restructure btns int component  
 [x] Moving averages   
     [x] Om MA-mode -> döda/bekräftade ändrar det läget, inte vanliga  
-[/] Linear Regression  
+[x] Linear Regression  
     [/] R^2 uppe till höger, mellan setting och grafen  
     [x] Knapparna så att det går ihop (justera MovingAvg till mer generell)  
     [x] Pröva med exponenter (MLR)  
-    [] Prediction 30 dagar  
-[] Advanced mode-knapp  
+    [x] Prediction 30 dagar  
+[x] Advanced mode-knapp  
+[] Senaste statistiken-rutor  
 
 # Stats
 [] Time Series Methods   

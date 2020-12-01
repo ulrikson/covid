@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from server.api import timeline, updateDb, movingAverage, simpleLinear
+from server.api import timeline, updateDb, movingAverage, simpleLinear, latestStats
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -16,6 +16,11 @@ def index():
 def getTimeline():
     settings = request.get_json()
     return timeline(settings)
+
+
+@app.route('/latest-stats', methods=['GET'])
+def getLatest():
+    return latestStats()
 
 
 @app.route('/moving', methods=['POST'])
