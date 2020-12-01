@@ -45,6 +45,13 @@
 			<div class="w-full bg-semiDark flex justify-center rounded-3xl py-10">
 				<chart ref="lineChart" @extra-info="handleExtraInfo"/>
 			</div>
+
+			<div class="flex items-center bg-semiDark rounded-3xl mt-8 text-gray-400 px-4 py-2">
+				© Erik Billebjer Ulrikson 
+				<a href="https://github.com/ulrikson" target="blank_"><i class="fa fa-github-square text-xl text-white ml-4"></i></a>
+				<a href="https://linkedin.com/in/erik-billebjer-ulrikson/" target="blank_"><i class="fa fa-linkedin-square text-xl text-blue-600 ml-2"></i></a>
+				<a href="https://twitter.com/ulrikson2" target="blank_"><i class="fa fa-twitter-square text-xl text-blue-200 ml-2"></i></a>
+			</div>
 		</div>
 	</div>
 </template>
