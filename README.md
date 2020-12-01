@@ -8,7 +8,8 @@
 [/] Linear Regression  
     [/] R^2 uppe till höger, mellan setting och grafen  
     [x] Knapparna så att det går ihop (justera MovingAvg till mer generell)  
-    [] Pröva med exponenter (MLR)  
+    [x] Pröva med exponenter (MLR)  
+    [] Prediction 30 dagar  
 [] Advanced mode-knapp  
 
 # Stats

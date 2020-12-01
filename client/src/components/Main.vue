@@ -21,8 +21,8 @@
 					</a>
 				</div>
 			</div>
-			<div class="flex w-full justify-end min-h-8">
-				<p class="text-white">{{extraInfo}}</p>
+			<div class="flex w-full justify-end items-center min-h-8">
+				<p v-if="choices.period == 'linear'" class="text-gray-400">{{r2Percentage}}</p>
 			</div>
 			<div class="w-full bg-semiDark flex justify-center rounded-3xl py-10">
 				<chart ref="lineChart" @extra-info="handleExtraInfo"/>
@@ -48,10 +48,20 @@ export default {
 		StatButton
 	},
 
+	computed: {
+		r2Percentage() {
+			const perc = Math.round(this.extraInfo.rSquare * 100);
+			const text = 'R2: ' + perc + '%';
+			return text;
+		}
+	},
+
 	data() {
 		return {
 			loading: false,
-			extraInfo: '',
+			extraInfo: {
+				rSquare: ''
+			},
 
 			choices: {
 				statistica: 'deaths_diff',
@@ -110,7 +120,7 @@ export default {
 		},
 
 		handleExtraInfo(info) {
-			this.extraInfo = info;
+			this.extraInfo.rSquare = info;
 		},
 
 		getStatistica () {
