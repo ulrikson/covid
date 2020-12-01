@@ -52,7 +52,7 @@ def updateDb():
 
     # if updated today or yesterday (api has a 1 day delay)
     if start >= end-timedelta(days=1):
-        return None
+        return 'already updated'
 
     # db connect and data fetch
     conn = dbConnect()
@@ -83,7 +83,6 @@ def updateDb():
             """)
 
         conn.execute(query)
-        # print(query) # for debugging
     
     conn.dispose()
 

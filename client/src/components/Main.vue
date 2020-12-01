@@ -102,7 +102,7 @@ export default {
 			this.loading = true;
 			axios.get('/refresh')
             .then(() => {
-				this.$refs.lineChart.getTimeline({statistica: 'deaths_diff'});
+				this.$refs.lineChart.getTimeline({statistica: 'deaths_diff', period: 'doy'});
 				this.loading = false;
             });
 		},
