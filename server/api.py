@@ -140,25 +140,27 @@ def simpleLinear(settings):
 
     data = timeline(settings)
 
+    # setting up data
     x = np.array(data['labels']).reshape((-1,1))
     y = np.array(data['covid_data'])
 
-    # y = bo + b1x + b2x^2 + b3x^3
-    polynom = PolynomialFeatures(degree=4, include_bias=False).fit_transform(x)
-
+    # Fitting data    
+    polynom = PolynomialFeatures(degree=3, include_bias=False).fit_transform(x) # y = bo + b1x + b2x^2 + b3x^3
     model = LinearRegression().fit(polynom, y)
-
-
     r_square = model.score(polynom,y)
-    predictions = model.predict(polynom).tolist()
 
-    # ! utilize later
-    # lastDataLabel = data['labels'][-1]
-    # x_future = np.arange(lastDataLabel+1, lastDataLabel+60).reshape(-1,1)
-    # futurePredictions = model.predict(x_future)
+    # Generating future predictions
+    firstDataLabel = data['labels'][0]
+    startOfPrediction = data['labels'][-1] + 1
+    endOfPrediction = startOfPrediction+30
+    predictData= [*range(int(firstDataLabel), int(endOfPrediction), 1)]
+
+    x_predict = np.array(predictData).reshape((-1,1))
+    predictPolynom = PolynomialFeatures(degree=3, include_bias=False).fit_transform(x_predict)
+    predictions = model.predict(predictPolynom).tolist() 
 
     json = {
-        'labels': data['labels'],
+        'labels': predictData,
         'covid_data': data['covid_data'],
         'predict': predictions,
         'r_square': r_square
@@ -167,10 +169,9 @@ def simpleLinear(settings):
     return json
 
 
-# settings = {
-#     'period': 'doy',
-#     'statistica': 'deaths_diff'
-# }
+settings = {
+    'period': 'doy',
+    'statistica': 'deaths_diff'
+}
 
 # test = simpleLinear(settings)
-# print(test['r_square'])
