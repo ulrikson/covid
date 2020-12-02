@@ -50,6 +50,7 @@
 				<a href="https://github.com/ulrikson" target="blank_"><i class="fa fa-github-square text-xl text-white ml-4"></i></a>
 				<a href="https://linkedin.com/in/erik-billebjer-ulrikson/" target="blank_"><i class="fa fa-linkedin-square text-xl text-blue-600 ml-2"></i></a>
 				<a href="https://twitter.com/ulrikson2" target="blank_"><i class="fa fa-twitter-square text-xl text-blue-200 ml-2"></i></a>
+				<a href="mailto:erik.ulrikson@gmail.com" target="blank_"><i class="fa fa-paper-plane text-l text-blue-200 ml-2"></i></a>
 			</div>
 		</div>
 	</div>
