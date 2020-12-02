@@ -7,12 +7,12 @@
 			</div>
 
 			<p class="text-gray-400 text-xs mt-4">Totalt:</p>
-			<div class="flex flex-wrap">
+			<div class="flex flex-wrap justify-between md:justify-start">
 				<div v-for="(stat, index, i) in latestStats" :key="index" :class="['flex items-center mt-2 bg-semiDark rounded-3xl px-3 py-2 text-sm text-gray-400', {'md:ml-2': i >= 1}]">
 					<span class="flex">
 						<confirmed-icon v-if="index == 'confirmed'" class="mr-2 h-5 w-5 text-red-200"/>
 						<dead-icon v-else class="mr-2 h-5 w-5 text-red-600"/>
-						{{formatNumber(stat)}} {{index == 'confirmed' ? 'bekräftade' : 'döda'}}
+						<number :to="stat" :duration="2" :format="formatNumber" class="mr-2"/> {{index == 'confirmed' ? 'bekräftade' : 'döda'}}
 					</span>
 				</div>
 			</div>
@@ -90,7 +90,10 @@ export default {
 		return {
 			loading: false,
 			experimental: false,
-			latestStats: {},
+			latestStats: {
+				confirmed: 0,
+				deaths: 0
+			},
 
 			extraInfo: {
 				rSquare: ''
@@ -147,7 +150,8 @@ export default {
 		getLatest() {
 			axios.get('/latest-stats')
 			.then((res) => {
-				this.latestStats = res.data;
+				this.latestStats.confirmed = res.data.confirmed;
+				this.latestStats.deaths = res.data.deaths;
 			})
 		},
 
@@ -187,7 +191,7 @@ export default {
 		},
 
 		formatNumber(number) {
-			return number.toLocaleString('sv');
+			return number.toFixed(0);
 		}
 	}
 }
