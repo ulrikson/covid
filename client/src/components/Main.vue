@@ -2,7 +2,7 @@
 	<div class="h-screen md:w-screen">
 		<div class="w-full p-8">
 			<div class="flex justify-start items-center">
-				<h1 class="font-bold text-xl text-white">COVID I SVERIGE</h1>
+				<h1 class="font-bold text-2xl text-white">COVID I SVERIGE</h1>
 			</div>
 
 			<p class="text-gray-400 text-xs mt-4">Totalt:</p>
@@ -45,12 +45,21 @@
 				<chart ref="lineChart" @extra-info="handleExtraInfo"/>
 			</div>
 
+			<div class="w-full bg-semiDark rounded-3xl p-10 mt-8 text-gray-200">
+				<h2 class="text-xl font-bold">TODO</h2>
+				<ul class="list-disc list-inside">
+					<li class="mt-2" v-for="todo in todos" :key="todo">
+						{{todo}}
+					</li>
+				</ul>
+			</div>
+
 			<div class="flex items-center bg-semiDark rounded-3xl mt-8 text-gray-400 px-4 py-2">
 				© Erik Billebjer Ulrikson 
-				<a href="https://github.com/ulrikson" target="blank_"><i class="fa fa-github-square text-xl text-white ml-4"></i></a>
-				<a href="https://linkedin.com/in/erik-billebjer-ulrikson/" target="blank_"><i class="fa fa-linkedin-square text-xl text-blue-600 ml-2"></i></a>
-				<a href="https://twitter.com/ulrikson2" target="blank_"><i class="fa fa-twitter-square text-xl text-blue-200 ml-2"></i></a>
-				<a href="mailto:erik.ulrikson@gmail.com" target="blank_"><i class="fa fa-paper-plane text-l text-blue-200 ml-2"></i></a>
+				<a href="https://github.com/ulrikson" target="blank_"><i class="fa fa-github-square text-3xl text-gray-200 ml-4"></i></a>
+				<a href="https://linkedin.com/in/erik-billebjer-ulrikson/" target="blank_"><i class="fa fa-linkedin-square text-3xl text-blue-600 ml-2"></i></a>
+				<a href="https://twitter.com/ulrikson2" target="blank_"><i class="fa fa-twitter-square text-3xl text-blue-200 ml-2"></i></a>
+				<a href="mailto:erik.ulrikson@gmail.com" target="blank_"><i class="fa fa-paper-plane text-2xl text-indigo-200 ml-2"></i></a>
 			</div>
 		</div>
 	</div>
@@ -86,6 +95,14 @@ export default {
 
 	data() {
 		return {
+			todos: [
+				'Lång text om projektet => Google älskar\'t',
+				'Ta bort ofullständiga veckor & månader, missvisande rn',
+				'Nyhetsintegrering med RSS',
+				'Mer tidsserie-metoder från nästa kurs',
+				'ML-metoder'
+			],
+
 			loading: false,
 			experimental: false,
 			latestStats: {
