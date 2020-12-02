@@ -3,7 +3,6 @@
 		<div class="w-full p-8">
 			<div class="flex justify-start items-center">
 				<h1 class="font-bold text-xl text-white">COVID I SVERIGE</h1>
-				<a href="javascript:void(0);" @click.prevent="refreshData"><refresh-icon :class="['ml-2 h-5 w-5 text-white', {'animate-spin': loading}]"/></a>
 			</div>
 
 			<p class="text-gray-400 text-xs mt-4">Totalt:</p>
@@ -60,7 +59,6 @@
 
 import axios from 'axios';
 
-import RefreshIcon from './icons/Refresh.vue';
 import ConfirmedIcon from './icons/Confirmed.vue';
 import DeadIcon from './icons/Dead.vue';
 
@@ -72,7 +70,6 @@ export default {
 
 	components: {
 		Chart,
-		RefreshIcon,
 		ConfirmedIcon,
 		DeadIcon,
 		StatButton
@@ -138,14 +135,6 @@ export default {
 	},
 
 	methods: {
-		refreshData() {
-			this.loading = true;
-			axios.get('/refresh')
-            .then(() => {
-				this.$refs.lineChart.getTimeline({statistica: 'deaths_diff', period: 'doy'});
-				this.loading = false;
-            });
-		},
 
 		getLatest() {
 			axios.get('/latest-stats')

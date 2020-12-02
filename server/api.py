@@ -7,9 +7,13 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 def dbConnect():
     # uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid" #LOCAL
-    uri = "postgres+psycopg2://odcvsrneqygagr:faa8ba613866ce9b68fda849c5752268684b07c77cdbcc4924386c70b8a993af@ec2-52-208-138-246.eu-west-1.compute.amazonaws.com:5432/df3b0t7h21j3io"
+    uri = os.getenv("HEROKU_URI")
 
     conn = create_engine(uri)
     return conn
@@ -24,58 +28,6 @@ def fetch(dateFrom, dateTo):
     response = requests.get('https://api.covid19api.com/country/sweden', params=params)
     data = response.json()
     return data
-
-
-def updateDb():
-
-    # creating timedelta for fetching data
-    latest = latestStats()
-    start = latest['report_date']
-    end = date.today()
-
-    # if updated today or yesterday (api has a 1 day delay)
-    if start >= end-timedelta(days=1):
-        return 'already updated'
-
-    # db connect and data fetch
-    conn = dbConnect()
-    data = fetch(start+timedelta(days=1), end)
-
-    # Looping and comparing to the day before
-    for index,day in enumerate(data):
-        current = data[index]
-        last = data[index-1]
-
-        # setting the diffs to previous days, replacing negative values with 0
-        confirmedDiff = current["Confirmed"]-last["Confirmed"]
-        deathsDiff = current["Deaths"]-last["Deaths"]
-        daysDiff = {
-            'confirmed_diff': confirmedDiff if confirmedDiff >= 0 else 0,
-            'deaths_diff': deathsDiff if deathsDiff >= 0 else 0,
-        }
-
-        if index > 0:
-            query = text(f"""
-                INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
-                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{daysDiff['confirmed_diff']}', '{current["Deaths"]}', '{daysDiff['deaths_diff']}')
-            """)
-        elif len(data) > 1 and index == 0:
-            query = text(f"""
-                INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
-                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]}', '{current["Deaths"]}', '{current["Deaths"]}' )
-            """)
-        else:
-            # if only one data point, calculate difference from latest DB instance
-            query = text(f"""
-                INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
-                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]-latest['confirmed']}', '{current["Deaths"]}', '{current["Deaths"]-latest["deaths"]}' )
-            """)
-
-        conn.execute(query)
-    
-    conn.dispose()
-
-    return 'success'
 
 
 def timeline(settings):
@@ -176,6 +128,3 @@ def latestStats():
     }
 
     return json
-
-
-updateDb()

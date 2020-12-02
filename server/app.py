@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from server.api import timeline, updateDb, movingAverage, simpleLinear, latestStats
+from server.api import timeline, movingAverage, simpleLinear, latestStats
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -33,11 +33,6 @@ def getMoving():
 def getLinear():
     settings = request.get_json()
     return simpleLinear(settings)
-
-
-@app.route('/refresh', methods=['GET'])
-def getFreshData():
-    return updateDb()
 
 
 if __name__ == "__main__":
