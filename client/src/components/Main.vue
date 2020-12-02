@@ -18,7 +18,7 @@
 
 			<div class="mt-2">
 				<div class="flex justify-end items-center">
-					<label class="text-gray-400 mr-2 text-xs">Experimentell</label>
+					<label class="text-gray-500 mr-2 text-sm">Experimentellt</label>
 					<input type="checkbox" v-model="experimental" class="h-2.5 w-2.5"/>
 				</div>
 				<div class="w-full md:h-12 px-2 bg-semiDark rounded-3xl flex flex-wrap items-center">
