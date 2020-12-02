@@ -26,28 +26,11 @@ def fetch(dateFrom, dateTo):
     return data
 
 
-def lastDbDate():
-    conn = dbConnect()
-
-    query = text("""
-        SELECT MAX(report_date) FROM sweden
-    """)
-
-    result = conn.execute(query).fetchone()
-
-    if result[0] == None:
-        firstCovidCase = '2020-02-25'
-        result = [datetime.strptime(firstCovidCase, '%Y-%m-%d').date()]
-
-    conn.dispose()
-
-    return result[0]
-
-
 def updateDb():
 
     # creating timedelta for fetching data
-    start = lastDbDate()
+    latest = latestStats()
+    start = latest['report_date']
     end = date.today()
 
     # if updated today or yesterday (api has a 1 day delay)
@@ -71,15 +54,21 @@ def updateDb():
             'deaths_diff': deathsDiff if deathsDiff >= 0 else 0,
         }
 
-        if index > 0 or len(data) == 1:
+        if index > 0:
             query = text(f"""
                 INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
                 VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{daysDiff['confirmed_diff']}', '{current["Deaths"]}', '{daysDiff['deaths_diff']}')
             """)
-        else:
+        elif len(data) > 1 and index == 0:
             query = text(f"""
                 INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
                 VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]}', '{current["Deaths"]}', '{current["Deaths"]}' )
+            """)
+        else:
+            # if only one data point, calculate difference from latest DB instance
+            query = text(f"""
+                INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
+                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]-latest['confirmed']}', '{current["Deaths"]}', '{current["Deaths"]-latest["deaths"]}' )
             """)
 
         conn.execute(query)
@@ -181,16 +170,12 @@ def latestStats():
     conn.dispose()
 
     json = {
+        'report_date': result[0],
         'confirmed': result[1],
         'deaths': result[2]
     }
 
     return json
 
-settings = {
-    'period': 'doy',
-    'statistica': 'deaths_diff'
-}
 
-# test = latestStats()
-# print(test)
+updateDb()
