@@ -96,11 +96,12 @@ export default {
 	data() {
 		return {
 			todos: [
-				'Lång text om projektet => Google älskar\'t',
 				'Ta bort ofullständiga veckor & månader, missvisande rn',
 				'Nyhetsintegrering med RSS',
 				'Mer tidsserie-metoder från nästa kurs',
-				'ML-metoder'
+				'ML-metoder',
+				'Domän',
+				'Lång förklarande text för SEO'
 			],
 
 			loading: false,
