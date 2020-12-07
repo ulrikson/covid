@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from server.api import timeline, movingAverage, simpleLinear, latestStats
+from server.api import timeline, movingAverage, multipleLinearRegression, latestStats
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -32,7 +32,7 @@ def getMoving():
 @app.route('/linear', methods=['POST'])
 def getLinear():
     settings = request.get_json()
-    return simpleLinear(settings)
+    return multipleLinearRegression(settings)
 
 
 if __name__ == "__main__":

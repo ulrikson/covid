@@ -76,7 +76,7 @@ def movingAverage(settings):
     return json
 
 
-def simpleLinear(settings):
+def multipleLinearRegression(settings):
 
     data = timeline(settings)
 
@@ -97,12 +97,14 @@ def simpleLinear(settings):
 
     x_predict = np.array(predictData).reshape((-1,1))
     predictPolynom = PolynomialFeatures(degree=3, include_bias=False).fit_transform(x_predict)
-    predictions = model.predict(predictPolynom).tolist() 
+    predictions = model.predict(predictPolynom).tolist()
+
+    rationalPredictions = [0 if nr < 0 else nr for nr in predictions] #rational as confirmed/deaths cannot be negative
 
     json = {
         'labels': predictData,
         'covid_data': data['covid_data'],
-        'predict': predictions,
+        'predict': rationalPredictions,
         'r_square': r_square
     }
 
@@ -128,3 +130,9 @@ def latestStats():
     }
 
     return json
+
+
+mockSettings = {
+    'period': 'doy',
+    'statistica': 'confirmed_diff'
+}
