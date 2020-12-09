@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from server.api import timeline, movingAverage, multipleLinearRegression, latestStats
+from server.newsparser import getNewsPosts
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -33,6 +34,11 @@ def getMoving():
 def getLinear():
     settings = request.get_json()
     return multipleLinearRegression(settings)
+
+
+@app.route('/news', methods=['GET'])
+def getNews():
+    return getNewsPosts()
 
 
 if __name__ == "__main__":

@@ -18,4 +18,6 @@ def getNewsPosts():
                 'url': item['url']
             })
 
-    return newsposts
+    return {
+        'posts': newsposts
+    }

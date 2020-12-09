@@ -54,6 +54,8 @@
 				</ul>
 			</div>
 
+			<news />
+
 			<div class="flex items-center bg-semiDark rounded-3xl mt-8 text-gray-400 px-4 py-2">
 				© Erik Billebjer Ulrikson 
 				<a href="https://github.com/ulrikson" target="blank_"><i class="fa fa-github-square text-3xl text-gray-200 ml-4"></i></a>
@@ -74,6 +76,7 @@ import DeadIcon from './icons/Dead.vue';
 
 import Chart from './Chart.vue';
 import StatButton from './StatButton.vue';
+import News from './News.vue';
 
 export default {
 	name: 'Main',
@@ -82,7 +85,8 @@ export default {
 		Chart,
 		ConfirmedIcon,
 		DeadIcon,
-		StatButton
+		StatButton,
+		News
 	},
 
 	computed: {
