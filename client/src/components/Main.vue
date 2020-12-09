@@ -45,15 +45,6 @@
 				<chart ref="lineChart" @extra-info="handleExtraInfo"/>
 			</div>
 
-			<div class="w-full bg-semiDark rounded-3xl p-10 mt-8 text-gray-200">
-				<h2 class="text-xl font-bold">TODO</h2>
-				<ul class="list-disc list-inside">
-					<li class="mt-2" v-for="todo in todos" :key="todo">
-						{{todo}}
-					</li>
-				</ul>
-			</div>
-
 			<news />
 
 			<div class="flex items-center bg-semiDark rounded-3xl mt-8 text-gray-400 px-4 py-2">
@@ -99,15 +90,6 @@ export default {
 
 	data() {
 		return {
-			todos: [
-				'Ta bort ofullständiga veckor & månader, missvisande rn',
-				'Nyhetsintegrering med RSS',
-				'Mer tidsserie-metoder från nästa kurs',
-				'ML-metoder',
-				'Domän',
-				'Lång förklarande text för SEO'
-			],
-
 			loading: false,
 			experimental: false,
 			latestStats: {
