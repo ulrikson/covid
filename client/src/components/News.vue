@@ -1,7 +1,7 @@
 <template>
-    <div class="w-full md:w-6/12 bg-semiDark rounded-3xl p-10 mt-8 text-gray-200">
+    <div class="w-full bg-semiDark rounded-3xl p-10 mt-8 text-gray-200">
         <h2 class="text-xl font-bold mb-4">Senaste nytt</h2>
-        <p v-for="(post,i) in newsposts" :key="i" class="mb-2">
+        <p v-for="(post,i) in newsposts" :key="i" class="mb-2 hover:underline">
             <a :href="post.url" target="blank_">{{post.title}}</a>
         </p>
     </div>
