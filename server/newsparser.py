@@ -9,10 +9,14 @@ def getNewsPosts():
     feed = getFeed()
 
     newsposts = []
+    titles = []
 
     for item in feed:
         title = item["title"].strip().replace(u'\xa0', u' ')
-        if title not in newsposts:
+
+        # checking so that identical not already exists
+        if title not in titles:
+            titles.append(title)
             newsposts.append({
                 'title': title,
                 'url': item['url']
