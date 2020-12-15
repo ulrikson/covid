@@ -140,6 +140,10 @@ def latestStats():
 
 
 def arima(settings):
+    """ smartest thing would be to run this script once per day, save the parameters to DB
+    and then just run that model (e.g. SARIMAX)
+    cause model fitting takes a lot of time
+    """ 
     data = timeline(settings)
 
     model = auto_arima(data['covid_data'], stepwise=True)
