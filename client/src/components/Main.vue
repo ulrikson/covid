@@ -34,6 +34,9 @@
 					<a href="javascript:void(0);" @click.prevent="getLinear()">
 						<stat-button :text="'MLR'" :bgColor="'bg-yellow-200'" :chosen="choices.period == 'linear'" />
 					</a>
+					<a href="javascript:void(0);" @click.prevent="getArima()">
+						<stat-button :text="'ARIMA'" :bgColor="'bg-yellow-200'" :chosen="choices.period == 'arima'" />
+					</a>
 				</div>
 			</div>
 
@@ -156,6 +159,8 @@ export default {
 				this.getMoving()
 			} else if (this.choices.period == 'linear'){
 				this.getLinear()
+			} else if (this.choices.period == 'arima') {
+				this.getArima()
 			} else {
 				this.getStatistica()
 			}
@@ -182,6 +187,11 @@ export default {
 		getLinear() {
 			this.$refs.lineChart.getLinear(this.choices);
 			this.choices.period = 'linear';
+		},
+
+		getArima() {
+			this.$refs.lineChart.getArima(this.choices);
+			this.choices.period = 'arima';
 		},
 
 		formatNumber(number) {

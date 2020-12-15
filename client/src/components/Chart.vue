@@ -93,7 +93,18 @@ export default {
             })
             .then((res) => {
                 this.timeline = res.data;
-                this.$emit('extra-info', res.data.r_square);
+                // this.$emit('extra-info', res.data.r_square);
+                this.fillData();
+            });
+        },
+
+        getArima(settings) {
+            axios.post('/arima', {
+                statistica: settings.statistica,
+                period: 'doy', // always per day
+            })
+            .then((res) => {
+                this.timeline = res.data;
                 this.fillData();
             });
         },

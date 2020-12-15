@@ -1,15 +1,22 @@
 import requests
 from datetime import date, timedelta, datetime
+
+# Env
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+# SQL
 from sqlalchemy import create_engine, text
 import psycopg2
+
+# ML
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
+from pmdarima import auto_arima
 
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
 def dbConnect():
     # uri = "postgresql+psycopg2://postgres:kebabpizza@localhost:5432/covid" #LOCAL
@@ -127,6 +134,27 @@ def latestStats():
         'report_date': result[0],
         'confirmed': result[1],
         'deaths': result[2]
+    }
+
+    return json
+
+
+def arima(settings):
+    data = timeline(settings)
+
+    model = auto_arima(data['covid_data'])
+    fitting = model.predict_in_sample().tolist()
+    predicting = model.predict(30).tolist() # 30 points forward
+
+    firstDataLabel = data['labels'][0]
+    startOfPrediction = data['labels'][-1] + 1
+    endOfPrediction = startOfPrediction+30
+    predictData= [*range(int(firstDataLabel), int(endOfPrediction), 1)]
+    
+    json = {
+        'labels': predictData,
+        'covid_data': data['covid_data'],
+        'predict': fitting+predicting
     }
 
     return json

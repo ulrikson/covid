@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from server.api import timeline, movingAverage, multipleLinearRegression, latestStats
+from server.api import timeline, movingAverage, multipleLinearRegression, latestStats, arima
 from server.newsparser import getNewsPosts
 from dotenv import load_dotenv
 import os
@@ -34,6 +34,12 @@ def getMoving():
 def getLinear():
     settings = request.get_json()
     return multipleLinearRegression(settings)
+
+
+@app.route('/arima', methods=['POST'])
+def getArima():
+    settings = request.get_json()
+    return arima(settings)
 
 
 @app.route('/news', methods=['GET'])
