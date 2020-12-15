@@ -1,6 +1,7 @@
 <template>
     <div class="w-90/100">
-        <line-chart :chart-data="datacollection" :options="options"></line-chart>
+        <p v-if="loading" class="text-xl text-center animate-pulse text-gray-200">Analyzing...</p>
+        <line-chart v-show="!loading" :chart-data="datacollection" :options="options"></line-chart>
     </div>
 </template>
 
@@ -23,6 +24,8 @@ export default {
             },
 
             timeline: '',
+
+            loading: false,
 
             datacollection: {},
 
@@ -99,11 +102,13 @@ export default {
         },
 
         getArima(settings) {
+            this.loading = true;
             axios.post('/arima', {
                 statistica: settings.statistica,
                 period: 'doy', // always per day
             })
             .then((res) => {
+                this.loading = false;
                 this.timeline = res.data;
                 this.fillData();
             });

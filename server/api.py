@@ -143,7 +143,6 @@ def arima(settings):
     data = timeline(settings)
 
     model = auto_arima(data['covid_data'], stepwise=True)
-    print(model.summary())
     fitting = model.predict_in_sample().tolist()
     predicting = model.predict(30).tolist() # 30 points forward
 
@@ -165,5 +164,3 @@ mockSettings = {
     'period': 'doy',
     'statistica': 'confirmed_diff'
 }
-
-arima(mockSettings)
