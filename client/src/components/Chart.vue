@@ -93,7 +93,7 @@ export default {
             })
             .then((res) => {
                 this.timeline = res.data;
-                // this.$emit('extra-info', res.data.r_square);
+                this.$emit('extra-info', res.data.r_square);
                 this.fillData();
             });
         },
