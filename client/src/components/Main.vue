@@ -16,11 +16,11 @@
 				</div>
 			</div>
 
-			<div class="mt-2">
-				<div class="flex justify-end items-center">
+			<div class="mt-8">
+				<!-- <div class="flex justify-end items-center">
 					<label class="text-gray-500 mr-2 text-sm">Experimentellt</label>
 					<input type="checkbox" v-model="experimental" class="h-2.5 w-2.5"/>
-				</div>
+				</div> -->
 				<div class="w-full md:h-12 px-2 bg-semiDark rounded-3xl flex flex-wrap items-center">
 					<a v-for="(btn, i) in stats" :key="i" href="javascript:void(0);" @click.prevent="changeStatistica(btn.statistica)">
 						<stat-button :text="btn.text" :bgColor="'bg-blue-600'" :chosen="choices.statistica == btn.statistica"/>
@@ -28,10 +28,10 @@
 					<a v-for="(btn, i) in periods" :key="i" href="javascript:void(0);" @click.prevent="getPeriod(btn.period)">
 						<stat-button :text="btn.text" :bgColor="'bg-green-200'" :chosen="choices.period == btn.period"/>
 					</a>
-					<a v-if="experimental" href="javascript:void(0);" @click.prevent="getMoving()">
+					<a href="javascript:void(0);" @click.prevent="getMoving()">
 						<stat-button :text="'5dag MA'" :bgColor="'bg-yellow-200'" :chosen="choices.period == 'moving_average'" />
 					</a>
-					<a v-if="experimental" href="javascript:void(0);" @click.prevent="getLinear()">
+					<a href="javascript:void(0);" @click.prevent="getLinear()">
 						<stat-button :text="'MLR'" :bgColor="'bg-yellow-200'" :chosen="choices.period == 'linear'" />
 					</a>
 				</div>
