@@ -155,14 +155,18 @@ export default {
 		changeStatistica (setting) {
 			this.choices.statistica = setting;
 
-			if (this.choices.period == 'moving_average') {
-				this.getMoving()
-			} else if (this.choices.period == 'linear'){
-				this.getLinear()
-			} else if (this.choices.period == 'arima') {
-				this.getArima()
-			} else {
-				this.getStatistica()
+			switch (this.choices.period) {
+				case 'moving_average':
+					this.getMoving()
+					break
+				case 'linear':
+					this.getLinear()
+					break
+				case 'arima':
+					this.getArima()
+					break
+				default:
+					this.getStatistica()
 			}
 		},
 
