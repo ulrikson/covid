@@ -1,6 +1,6 @@
 <template>
     <div class="w-90/100">
-        <p v-if="loading" class="text-xl text-center animate-pulse text-gray-200">Analyzing...</p>
+        <p v-if="loading" class="text-xl text-center animate-pulse text-gray-200">Analyzing (~30s)...</p>
         <line-chart v-show="!loading" :chart-data="datacollection" :options="options"></line-chart>
     </div>
 </template>
