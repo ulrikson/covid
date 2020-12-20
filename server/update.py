@@ -31,18 +31,14 @@ def updateDb():
             'deaths_diff': deathsDiff if deathsDiff >= 0 else 0,
         }
 
+        # if more > 1 date to be updated, takes diff to last instance
         if index > 0:
             query = text(f"""
                 INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
                 VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{daysDiff['confirmed_diff']}', '{current["Deaths"]}', '{daysDiff['deaths_diff']}')
             """)
-        elif len(data) > 1 and index == 0:
-            query = text(f"""
-                INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
-                VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]}', '{current["Deaths"]}', '{current["Deaths"]}' )
-            """)
+        # if only 1 to be updated, takes diff to last db value
         else:
-            # if only one data point, calculate difference from latest DB instance
             query = text(f"""
                 INSERT INTO sweden (report_date, confirmed, confirmed_diff, deaths, deaths_diff)
                 VALUES ('{current["Date"]}', '{current["Confirmed"]}', '{current["Confirmed"]-latest['confirmed']}', '{current["Deaths"]}', '{current["Deaths"]-latest["deaths"]}' )
