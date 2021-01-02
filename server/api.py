@@ -32,7 +32,7 @@ def fetch(dateFrom, dateTo):
         'to': dateTo,
     }
 
-    response = requests.get('https://api.covid19api.com/country/sweden', params=params)
+    response = requests.get('http://api.covid19api.com/country/sweden', params=params)
     data = response.json()
     return data
 
